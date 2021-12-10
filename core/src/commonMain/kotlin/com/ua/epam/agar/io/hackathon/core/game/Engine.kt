@@ -6,7 +6,7 @@ interface Engine {
 
     suspend fun startGame()
 
-    suspend fun configure(roomId: String)
+    suspend fun configure(roomId: String, isTrainingRoom: Boolean = false)
 
     suspend fun stopGame()
 }

@@ -1,6 +1,5 @@
 package com.ua.epam.agar.io.hackathon.core.entity.public_api
 
-import com.ua.epam.agar.io.hackathon.core.entity.cell.MyCell
 import com.ua.epam.agar.io.hackathon.core.entity.main.DesiredCellsState
 import com.ua.epam.agar.io.hackathon.core.entity.main.MapState
 import com.ua.epam.agar.io.hackathon.core.game.config.GameConfig
@@ -16,5 +15,5 @@ abstract class CellLogic {
         this.gameConfig = gameConfig
     }
 
-    abstract fun handleGameUpdate(myCells: List<MyCell>, mapState: MapState): DesiredCellsState?
+    abstract fun handleGameUpdate(mapState: MapState): DesiredCellsState?
 }

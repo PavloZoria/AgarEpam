@@ -1,18 +1,23 @@
 package com.ua.epam.agar.io.hackathon.core.entity
 
+import kotlin.math.sqrt
+
 data class Position(val x: Float, val y: Float)
 
-/*
-*  "id": String, // the UUID
-//         "mass": Float,
-//         "energy": Float, // the energy that cell eaten, may be developed into skills or growing the cell
-//         "radius": Float,
-//         "position": {
-//         "x": Float,
-//         "y": Float
-//     },
-//         "velocity": {
-//         "x": Float,
-//         "y": Float
-//     }
-* */
+fun Position.distanceTo(target: Position): Double = distanceBetweenPoints(this, target)
+
+fun distanceBetweenPoints(
+    position1: Position,
+    position2: Position,
+): Double {
+    val (x1, y1) = position1
+    val (x2, y2) = position2
+    return distanceBetweenPoints(x1, y1, x2, y2)
+}
+
+fun distanceBetweenPoints(
+    x1: Float,
+    y1: Float,
+    x2: Float,
+    y2: Float,
+) = sqrt(((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1)).toDouble())

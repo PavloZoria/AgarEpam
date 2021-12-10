@@ -3,7 +3,7 @@ package com.ua.agar.io.hackathon.data
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PositionModel(val x: Float, val y: Float)
+data class PositionModel(val x: Float?, val y: Float?)
 
 /*
 *  "id": String, // the UUID

@@ -23,7 +23,7 @@ class InternalGameEngine(private val engineProvider: EngineProvider) : GameEngin
 
     override fun startGame(roomId: String) {
         checkInitCondition()
-        scope.launch {
+        scope.launch(Dispatchers.Default) {
             engine.connectToRoom(roomId)
             engine.startGame()
         }
@@ -31,10 +31,10 @@ class InternalGameEngine(private val engineProvider: EngineProvider) : GameEngin
 
     override fun stopGame() {
         checkInitCondition()
-        scope.launch {
+        scope.launch(Dispatchers.Default) {
             engine.stopGame()
+            // scope.coroutineContext.cancelChildren()
         }
-        scope.coroutineContext.cancelChildren()
     }
 
     private fun checkInitCondition(message: String = "Game engine should be initialized before!") =

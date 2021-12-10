@@ -1,6 +1,5 @@
 package com.ua.agar.io.hackathon.data
 
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable

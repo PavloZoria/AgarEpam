@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-class FoodConfigModel(
+data class FoodConfigModel(
     @SerialName("mass")
     val mass: Float
 )

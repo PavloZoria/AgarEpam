@@ -1,6 +1,7 @@
 plugins {
     kotlin("multiplatform")
-    id("kotlinx-serialization")
+    kotlin("plugin.serialization")
+    // id("kotlinx-serialization")
 }
 
 val kotlinxCoroutinesVersion: String by rootProject
@@ -19,6 +20,8 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-protobuf:$kotlinxSerializationVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinxSerializationVersion")
 
+                implementation("dev.icerock.moko:socket-io:0.3.0")
+
                 implementation("io.rsocket.kotlin:rsocket-core:0.13.1")
                 // TCP ktor transport
                 implementation("io.rsocket.kotlin:rsocket-transport-ktor:0.13.1")
@@ -34,8 +37,9 @@ kotlin {
         }
         val jvmMain by getting {
             dependencies {
-                // implementation("io.ktor:ktor-client-cio:1.6.6")
-                implementation("io.ktor:ktor-client-okhttp:1.6.4") //jvm
+                implementation("com.squareup.okhttp3:okhttp:4.9.0")
+                implementation("io.ktor:ktor-client-cio:1.6.6") //jvm
+                // implementation("io.ktor:ktor-client-okhttp:1.6.4") //jvm
 
             }
         }
