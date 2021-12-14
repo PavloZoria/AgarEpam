@@ -6,7 +6,7 @@ import com.ua.epam.agar.io.hackathon.core.entity.cell.Cell
 import com.ua.epam.agar.io.hackathon.core.entity.cell.MyCell
 import com.ua.epam.agar.io.hackathon.core.entity.mapper.Mapper
 
-class CellMapper(
+internal class CellMapper(
     private val myCellMapper: MyCellMapper = MyCellMapper(),
     private val alienCellMapper: AlienCellMapper = AlienCellMapper(),
 ) :

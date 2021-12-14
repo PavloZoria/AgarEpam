@@ -5,13 +5,14 @@ import com.ua.epam.agar.io.hackathon.core.game.Engine
 import com.ua.epam.agar.io.hackathon.core.game.engine.provider.EngineProvider
 import kotlinx.coroutines.*
 
-//TODO should be moved outside
 class InternalGameEngine(private val engineProvider: EngineProvider) : GameEngine {
 
     private val scope: CoroutineScope =
         CoroutineScope(Job() + Dispatchers.Main + CoroutineExceptionHandler(handler = { _, throwable ->
+            // throw Exception("Some exception were unhandled! Cause:\n ${throwable.stackTraceToString()}")
             throw throwable
         }))
+
     private lateinit var engine: Engine
 
     override fun initialize(cellLogic: CellLogic) {
@@ -33,7 +34,7 @@ class InternalGameEngine(private val engineProvider: EngineProvider) : GameEngin
         checkInitCondition()
         scope.launch(Dispatchers.Default) {
             engine.stopGame()
-            // scope.coroutineContext.cancelChildren()
+            scope.coroutineContext.cancelChildren()
         }
     }
 

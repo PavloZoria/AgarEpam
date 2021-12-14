@@ -15,10 +15,14 @@ import com.ua.epam.agar.io.hackathon.core.printLine
 import com.ua.epam.agar.io.hackathon.core.repository.DefaultGameRepository
 import com.ua.epam.agar.io.hackathon.core.repository.GameRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class DefaultEngine(private val cellLogic: CellLogic) : Engine {
+    private var startedJob: Job? = null
     private val webSocket = KtorWebSocket("45.77.67.171", modelMapper = WebSocketModelMapper())
     private val gameDataRepository: GameDataRepository = GameWebSocketAsAPI(webSocket)
 
@@ -40,12 +44,10 @@ class DefaultEngine(private val cellLogic: CellLogic) : Engine {
     }
 
     override suspend fun startGame() = withContext(Dispatchers.Default) {
-        checkEngineCondition()
         playTheGame()
     }
 
     override suspend fun configure(roomId: String, isTrainingRoom: Boolean) = withContext(Dispatchers.Default) {
-        checkEngineCondition()
         printLine("configure: begin...")
         runCatching {
             val gameConfig = gameRepository.connectToRoom(roomId)
@@ -59,10 +61,10 @@ class DefaultEngine(private val cellLogic: CellLogic) : Engine {
     }
 
     override suspend fun stopGame() = withContext(Dispatchers.Default) {
-        checkEngineCondition()
         printLine("stopGame")
         runCatching {
-            gameDataRepository.disconnectFromTransport("Stop game")
+            gameDataRepository.disconnectFromTransport("Stop game!")
+            startedJob?.cancel()
             printLine("stopGame: finished!")
         }.onFailure {
             throw Exception("Error happened during stopping the game! Cause:\n ${it.stackTraceToString()}")
@@ -74,22 +76,23 @@ class DefaultEngine(private val cellLogic: CellLogic) : Engine {
 
     private suspend fun playTheGame() = withContext(Dispatchers.Default) {
         runCatching {
-            checkEngineCondition()
-            printLine("playTheGame: mapState begin...")
-            var mapState: MapState = gameRepository.mapState()
-            printLine("playTheGame: mapState taken")
-            while (isActive) {
-                printLine("playTheGame: Game turn")
-                val desiredCellsState = cellLogic.handleGameUpdate(mapState)
-                mapState = gameRepository.gameTurn(desiredCellsState)
+            startedJob = launch {
+                var mapState: MapState = gameRepository.mapState()
+                while (startedJob?.isActive == true) {
+                    printLine("playTheGame: Game turn")
+                    if (mapState.myCells.isEmpty()) {
+                        printLine("You are dead!")
+                        stopGame()
+                        break
+                    }
+
+                    val desiredCellsState = cellLogic.handleGameUpdate(mapState)
+                    mapState = gameRepository.gameTurn(desiredCellsState)
+                }
             }
         }.onFailure {
             throw Exception("Error happened during the game in progress! Cause:\n ${it.stackTraceToString()}")
         }
         Unit
-    }
-
-    private fun checkEngineCondition() {
-        // require(this::gameRepository.isInitialized) { "connectToRoom method should be called before" }
     }
 }

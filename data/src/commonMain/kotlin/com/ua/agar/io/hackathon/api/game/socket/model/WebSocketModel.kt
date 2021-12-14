@@ -12,19 +12,19 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
 @Serializable
-data class WebSocketModel(
+internal data class WebSocketModel(
     @SerialName("key")
     val key: String,
     @SerialName("data")
     val valueJson: JsonElement? = null,
 )
 
-fun <T> WebSocket<WebSocketModel>.parseEntity(
+internal fun <T> WebSocket<WebSocketModel>.parseEntity(
     key: WebSocketKey,
     mapper: (json: JsonElement) -> T,
 ) = inputEvents
     .map {
-        println("WebSocket.parseEntity: for key $key and received: ${it?.key}")
+        // println("WebSocket.parseEntity: for key $key and received: ${it?.key}")
         it
     }
     .filterNotNull()
@@ -34,6 +34,6 @@ fun <T> WebSocket<WebSocketModel>.parseEntity(
     .map {
         // println("WebSocket.parseEntity: $it")
         val entity = mapper(it.valueJson!!)
-        println("WebSocket.parseEntity: parsed for key ${key.key} -> $entity")
+        // println("WebSocket.parseEntity: parsed for key ${key.key} -> $entity")
         entity
     }

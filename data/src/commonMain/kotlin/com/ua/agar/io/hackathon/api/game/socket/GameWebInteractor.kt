@@ -8,7 +8,7 @@ import com.ua.epam.agar.io.hackathon.core.entity.main.MapState
 import com.ua.epam.agar.io.hackathon.core.game.config.GameConfig
 import com.ua.epam.agar.io.hackathon.core.repository.GameRepository
 
-class GameWebInteractor(
+internal class GameWebInteractor(
     private val gameDataRepository: GameDataRepository,
     private val gameConfigMapper: GameConfigMapper = GameConfigMapper(),
     private val mapStateMapper: MapStateMapper = MapStateMapper(),
@@ -27,7 +27,7 @@ class GameWebInteractor(
     override suspend fun gameTurn(desiredCellsState: DesiredCellsState?): MapState {
         val mapState =
             gameDataRepository.transportGameTurn(desiredCellsState?.let { desiredCellStateMapper.mapTo(desiredCellsState) })
-        println("gameTurn -> cellsOnMap: ${mapState.cellsOnMap.size}")
+        // println("gameTurn -> cellsOnMap: ${mapState.cellsOnMap.size}")
         return mapStateMapper.mapFrom(mapState)
     }
 }

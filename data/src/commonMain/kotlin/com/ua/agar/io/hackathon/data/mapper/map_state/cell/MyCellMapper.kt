@@ -7,7 +7,7 @@ import com.ua.epam.agar.io.hackathon.core.entity.cell.Cell
 import com.ua.epam.agar.io.hackathon.core.entity.cell.MyCell
 import com.ua.epam.agar.io.hackathon.core.entity.mapper.Mapper
 
-class MyCellMapper(
+internal class MyCellMapper(
     private val positionMapper: PositionMapper = PositionMapper(),
     private val velocityMapper: VelocityMapper = VelocityMapper()
 ) : Mapper<MyCell, CellModel> {

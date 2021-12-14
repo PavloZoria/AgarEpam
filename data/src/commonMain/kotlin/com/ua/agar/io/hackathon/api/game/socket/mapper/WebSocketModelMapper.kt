@@ -6,7 +6,7 @@ import io.ktor.http.cio.websocket.Frame
 import io.ktor.http.cio.websocket.readText
 import kotlinx.serialization.json.Json
 
-class WebSocketModelMapper : SocketModelMapper<WebSocketModel> {
+internal class WebSocketModelMapper : SocketModelMapper<WebSocketModel> {
     override fun mapFrom(item: WebSocketModel): Frame.Text {
         return Frame.Text(Json.encodeToString(WebSocketModel.serializer(), item))
     }

@@ -8,6 +8,7 @@ pluginManagement {
         google()
         gradlePluginPortal()
         mavenCentral()
+        maven("https://kotlin.bintray.com/ktor")
     }
 }
 
@@ -15,5 +16,5 @@ rootProject.name = "agar-library"
 
 include("core")
 include("data")
-include("playground")
+include("agar-epam-library")
 include("agar-epam")

@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CellConfigModel(
+internal data class CellConfigModel(
     @SerialName("minMass")
     val minMass: Float,
     @SerialName("maxMass")

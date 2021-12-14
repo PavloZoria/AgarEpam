@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
  * Request
  */
 @Serializable
-data class DesiredCellsStateModel(
+internal data class DesiredCellsStateModel(
     @SerialName("cells")
     val myCells: List<CellActivityModel>? = null,
 ) : WebSocketData()

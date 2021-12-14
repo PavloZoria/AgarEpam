@@ -14,22 +14,15 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromJsonElement
 import kotlinx.serialization.json.encodeToJsonElement
 
-class GameWebSocketAsAPI(
+internal class GameWebSocketAsAPI(
     private val webSocket: WebSocket<WebSocketModel>,
 ) : GameDataRepository {
 
     private val mapState: Flow<MapStateModel> = webSocket
         .parseEntity(WebSocketKey.GAME_DATA) { valueJson ->
-            printLine("mapState: $valueJson")
+            // printLine("mapState: $valueJson")
             Json.decodeFromJsonElement(valueJson)
         }
-    // MutableStateFlow(MapStateModel(ArrayList(), ArrayList())).apply {
-    //     webSocket
-    //         .parseEntity(WebSocketKey.GAME_DATA) { valueJson ->
-    //             println("GameWebSocket2: mapState -> $valueJson")
-    //             value = Json.decodeFromJsonElement(valueJson)
-    //         }
-    // }
 
     private val gameConfig: Flow<GameConfigModel> = webSocket
         .parseEntity(WebSocketKey.GAME_CONFIG) {
@@ -46,28 +39,28 @@ class GameWebSocketAsAPI(
     // }
 
     override suspend fun connectTransportToRoom(room: String, isTraining: Boolean): GameConfigModel {
-        printLine("connectToRoom: $room")
+        // printLine("connectToRoom: $room")
         send(WebSocketModel(WebSocketKey.CONNECT_TO_ROOM.key, Json.encodeToJsonElement(Room(room, isTraining))))
         val gameConfigModel = gameConfig.first()
-        printLine("connectToRoom received: $room")
+        // printLine("connectToRoom received: $room")
         return gameConfigModel
     }
 
     override suspend fun gameConfigFromTransport(): GameConfigModel {
-        printLine("gameConfigFromTransport...")
+        // printLine("gameConfigFromTransport...")
         send(WebSocketModel(WebSocketKey.GAME_CONFIG.key, null))
         return gameConfig.first()
     }
 
     override suspend fun mapStateFromTransport(): MapStateModel {
-        printLine("mapStateFromTransport...")
+        // printLine("mapStateFromTransport...")
         // val data = WebSocketModel(WebSocketKey.PLAYER_ACTION.key, Json.encodeToJsonElement(DesiredCellsStateModel()))
         // send(data)
         return mapState.first()
     }
 
     override suspend fun transportGameTurn(desiredCellsState: DesiredCellsStateModel?): MapStateModel {
-        printLine("transportGameTurn: $desiredCellsState")
+        // printLine("transportGameTurn: $desiredCellsState")
         if (desiredCellsState != null) {
             val data =
                 WebSocketModel(WebSocketKey.PLAYER_ACTION.key, Json.encodeToJsonElement(desiredCellsState))

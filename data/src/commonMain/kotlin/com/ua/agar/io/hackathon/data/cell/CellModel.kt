@@ -6,7 +6,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CellModel(
+internal data class CellModel(
     @SerialName("id")
     val cellId: String? = null,
     @SerialName("player")

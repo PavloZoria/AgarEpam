@@ -3,7 +3,7 @@ package com.ua.agar.io.hackathon.data
 import kotlinx.serialization.Serializable
 
 @Serializable
-sealed class MoveActionModel {
+internal sealed class MoveActionModel {
     @Serializable
     object Split : MoveActionModel()
 

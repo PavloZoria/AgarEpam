@@ -1,4 +1,4 @@
-package com.ua.agar.io.hackathon.playground
+package com.ua.agar.io.hackathon
 
 import com.ua.agar.io.hackathon.engine.DefaultEngine
 import com.ua.epam.agar.io.hackathon.core.entity.public_api.CellLogic

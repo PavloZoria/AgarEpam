@@ -5,7 +5,7 @@ import com.ua.agar.io.hackathon.api.game.storage.Storage
 /**
  * Stores data in local RAM memory
  */
-abstract class LocalStorage<T : Any> : Storage<T> {
+internal abstract class LocalStorage<T : Any> : Storage<T> {
     protected var field: T? = null
 
     override suspend fun get(): T {

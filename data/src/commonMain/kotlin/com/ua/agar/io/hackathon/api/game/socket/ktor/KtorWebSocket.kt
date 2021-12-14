@@ -20,7 +20,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 
-class KtorWebSocket<Model>(
+internal class KtorWebSocket<Model>(
     private val host: String = "localhost",
     private val port: Int = DEFAULT_PORT,
     private val path: String = "/",
@@ -29,7 +29,7 @@ class KtorWebSocket<Model>(
 
     private val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Default)
 
-    override val inputEvents = MutableSharedFlow<Model?>(onBufferOverflow = BufferOverflow.DROP_OLDEST, replay = 1)
+    override val inputEvents = MutableSharedFlow<Model?>(onBufferOverflow = BufferOverflow.SUSPEND, replay = 1)
     override val outputEvents: MutableSharedFlow<Frame?> = MutableSharedFlow()
     override val errorEvents = MutableSharedFlow<Exception?>()
 
@@ -44,9 +44,9 @@ class KtorWebSocket<Model>(
 
             coroutineScope.launch {
                 wsClient.receive { message ->
-                    printLine("Received from socket:" + message.readText())
+                    // printLine("Received from socket:" + message.readText())
                     val value = modelMapper.mapToSafely(message)
-                    val tryEmit = inputEvents.tryEmit(value)
+                    inputEvents.tryEmit(value)
                     // println("WS Listening emitted: $tryEmit, value: $value")
                 }
             }
@@ -76,7 +76,7 @@ class KtorWebSocket<Model>(
     }
 
     override suspend fun sendMessage(value: Model) {
-        printLine("sendMessage: $value")
+        // printLine("sendMessage: $value")
         wsClient.send(modelMapper.mapFrom(value))
     }
 }

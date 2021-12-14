@@ -5,4 +5,4 @@ import kotlin.jvm.JvmInline
 
 @Serializable
 @JvmInline
-value class CellIdModel(val id: String)
+internal value class CellIdModel(val id: String)

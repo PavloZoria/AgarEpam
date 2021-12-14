@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class MapConfigModel(
+internal data class MapConfigModel(
     @SerialName("height")
     val height: Float,
     @SerialName("width")

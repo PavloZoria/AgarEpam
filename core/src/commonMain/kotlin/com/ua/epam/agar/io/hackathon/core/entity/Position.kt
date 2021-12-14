@@ -4,7 +4,9 @@ import kotlin.math.sqrt
 
 data class Position(val x: Float, val y: Float)
 
-fun Position.distanceTo(target: Position): Double = distanceBetweenPoints(this, target)
+fun Position.distanceTo(target: Position?): Double = target?.let { distanceBetweenPoints(this, target) } ?: 0.0
+
+fun Position.distanceToPosition(target: Position): Double = distanceBetweenPoints(this, target)
 
 fun distanceBetweenPoints(
     position1: Position,

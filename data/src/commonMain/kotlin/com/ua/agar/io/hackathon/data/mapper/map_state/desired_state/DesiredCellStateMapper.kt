@@ -6,7 +6,7 @@ import com.ua.epam.agar.io.hackathon.core.entity.mapper.Mapper
 import com.ua.epam.agar.io.hackathon.core.entity.mapper.mapListFrom
 import com.ua.epam.agar.io.hackathon.core.entity.mapper.mapListTo
 
-class DesiredCellStateMapper(private val mapper: CellActivityMapper = CellActivityMapper()) :
+internal class DesiredCellStateMapper(private val mapper: CellActivityMapper = CellActivityMapper()) :
     Mapper<DesiredCellsState, DesiredCellsStateModel> {
     override fun mapFrom(item: DesiredCellsStateModel): DesiredCellsState = with(item) {
         // DesiredCellsState(myCells.mapListFrom(mapper))

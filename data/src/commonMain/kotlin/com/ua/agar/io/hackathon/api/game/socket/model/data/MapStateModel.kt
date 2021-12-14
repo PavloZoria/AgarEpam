@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
  * Response
  */
 @Serializable
-data class MapStateModel(
+internal data class MapStateModel(
     @SerialName("tick")
     val tickNumber: Int,
     @SerialName("cells")

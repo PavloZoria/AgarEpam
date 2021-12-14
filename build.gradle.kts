@@ -4,9 +4,10 @@ buildscript {
         gradlePluginPortal()
         google()
         mavenCentral()
+        maven("https://kotlin.bintray.com/ktor")
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:7.0.3")
+        classpath("com.android.tools.build:gradle:7.0.4")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
         classpath("org.jetbrains.kotlin:kotlin-serialization:$kotlin_version")
         classpath(kotlin("serialization", version = kotlin_version))

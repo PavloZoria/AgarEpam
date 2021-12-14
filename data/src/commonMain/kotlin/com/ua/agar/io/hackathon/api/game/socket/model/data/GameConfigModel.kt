@@ -7,7 +7,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class GameConfigModel(
+internal data class GameConfigModel(
     @SerialName("tickTime")
     val tickTime: Long,
     @SerialName("cell")

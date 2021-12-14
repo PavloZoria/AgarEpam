@@ -3,14 +3,14 @@ plugins {
     kotlin("plugin.serialization")
     id("com.android.library")
 }
-group = "com.ua.agar.io.hackathon.playground"
+group = "com.ua.agar.io/hackathon"
 version = "unspecified"
 
 repositories {
     gradlePluginPortal()
     google()
-    jcenter()
     mavenCentral()
+    maven("https://kotlin.bintray.com/ktor")
 }
 
 val kotlinxCoroutinesVersion: String by rootProject

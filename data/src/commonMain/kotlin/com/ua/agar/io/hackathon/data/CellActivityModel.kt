@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CellActivityModel(
+internal data class CellActivityModel(
     @SerialName("id")
     val cellId: String,
     @SerialName("speed")

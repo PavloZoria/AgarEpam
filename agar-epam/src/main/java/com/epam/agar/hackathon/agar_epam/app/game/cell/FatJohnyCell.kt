@@ -1,29 +1,26 @@
-package com.epam.agar.hackathon.agar_epam.app.game
+package com.epam.agar.hackathon.agar_epam.app.game.cell
 
 import com.ua.epam.agar.io.hackathon.core.entity.CellActivity
 import com.ua.epam.agar.io.hackathon.core.entity.Food
-import com.ua.epam.agar.io.hackathon.core.entity.Velocity
 import com.ua.epam.agar.io.hackathon.core.entity.cell.MyCell
 import com.ua.epam.agar.io.hackathon.core.entity.distanceTo
 import com.ua.epam.agar.io.hackathon.core.entity.main.DesiredCellsState
 import com.ua.epam.agar.io.hackathon.core.entity.main.MapState
+import com.ua.epam.agar.io.hackathon.core.entity.moveTo
 import com.ua.epam.agar.io.hackathon.core.entity.public_api.CellLogic
-import com.ua.epam.agar.io.hackathon.core.printLine
 
 /**
  * Test cell that search for the closest food and eat it
  */
 class FatJohnyCell : CellLogic() {
     override fun handleGameUpdate(mapState: MapState): DesiredCellsState? {
-        printLine("TestCell mapState.size: ${mapState.myCells}")
         return mapState.myCells.map { myCell ->
-            val (cellX, cellY) = myCell.property.position
-            val (foodX, foodY) = findClosestFood(mapState, myCell).position
+            val from = myCell.property.position
+            val target = findClosestFood(mapState, myCell)?.position
 
 
-            CellActivity(myCell.cellId, speed = 1.0f, velocity = Velocity(foodX - cellX, foodY - cellY))
+            CellActivity(myCell.cellId, speed = 1.0f, velocity = from.moveTo(target))
         }.run {
-            printLine("TestCell: ${this.size}")
             DesiredCellsState(this)
         }
         // return null
@@ -32,10 +29,9 @@ class FatJohnyCell : CellLogic() {
     private fun findClosestFood(
         mapState: MapState,
         myCell: MyCell,
-    ): Food {
+    ): Food? {
         val distanceWithFood = mapState.food.map { food ->
             val distance = food.position.distanceTo(myCell.property.position)
-            printLine("findClosestFood: $distance")
             distance to food
         }
 
@@ -50,7 +46,6 @@ class FatJohnyCell : CellLogic() {
             }
         }
 
-        printLine("closestFood: $closestFood")
-        return closestFood!!.second
+        return closestFood?.second
     }
 }

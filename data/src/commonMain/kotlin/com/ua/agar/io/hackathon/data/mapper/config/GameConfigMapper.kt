@@ -4,7 +4,7 @@ import com.ua.agar.io.hackathon.api.game.socket.model.data.GameConfigModel
 import com.ua.epam.agar.io.hackathon.core.entity.mapper.Mapper
 import com.ua.epam.agar.io.hackathon.core.game.config.GameConfig
 
-class GameConfigMapper(
+internal class GameConfigMapper(
     private val cellConfigMapper: CellConfigMapper = CellConfigMapper(),
     private val mapConfigMapper: MapConfigMapper = MapConfigMapper(),
     private val foodConfigMapper: FoodConfigMapper = FoodConfigMapper()

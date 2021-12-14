@@ -6,7 +6,7 @@ import com.ua.agar.io.hackathon.data.mapper.map_state.cell.VelocityMapper
 import com.ua.epam.agar.io.hackathon.core.entity.CellActivity
 import com.ua.epam.agar.io.hackathon.core.entity.mapper.Mapper
 
-class CellActivityMapper(private val velocityMapper: VelocityMapper = VelocityMapper()) :
+internal class CellActivityMapper(private val velocityMapper: VelocityMapper = VelocityMapper()) :
     Mapper<CellActivity, CellActivityModel> {
     override fun mapFrom(item: CellActivityModel): CellActivity = with(item) {
         // CellActivity(CellId(cellId.id), Velocity(velocity?.x ?: 0, velocity?.y ?: 0))

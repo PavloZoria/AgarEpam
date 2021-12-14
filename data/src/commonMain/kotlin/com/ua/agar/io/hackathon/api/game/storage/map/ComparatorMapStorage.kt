@@ -7,11 +7,14 @@ import com.ua.agar.io.hackathon.data.VelocityModel
 import com.ua.agar.io.hackathon.data.cell.CellModel
 import com.ua.agar.io.hackathon.api.game.socket.model.data.MapStateModel
 
-typealias NewStateMapStateModel = MapStateModel
+internal typealias NewStateMapStateModel = MapStateModel
 
-class ComparatorMapStorage(private val storage: Storage<MapStateModel>) : Storage<NewStateMapStateModel> {
-    //TODO need to check here if the data is exist and change only fresh data
+internal class ComparatorMapStorage(private val storage: Storage<MapStateModel>) : Storage<NewStateMapStateModel> {
+
     override suspend fun set(newState: NewStateMapStateModel) {
+        storage.set(newState)
+        return
+//refreshing data isn't available from platform side
         val mapStateModel = if (storage.exist()) {
             val mapStateToBeRefreshed = storage.get().copy()
             println("ComparatorMapStorage: set -> newState: $newState \n savedState: $mapStateToBeRefreshed")
@@ -50,7 +53,6 @@ class ComparatorMapStorage(private val storage: Storage<MapStateModel>) : Storag
 
     override suspend fun exist(): Boolean = storage.exist()
 
-
     override fun invalidate() = storage.invalidate()
 
     private fun MapStateModel.findCellModelById(cellId: String?) =
@@ -72,7 +74,7 @@ class ComparatorMapStorage(private val storage: Storage<MapStateModel>) : Storag
     }
 }
 
-fun CellModel.safeCopy(new: CellModel): CellModel {
+internal fun CellModel.safeCopy(new: CellModel): CellModel {
     val old = this
     return old.copy(
         mass = new.mass ?: old.mass,
@@ -88,21 +90,21 @@ fun CellModel.safeCopy(new: CellModel): CellModel {
     )
 }
 
-fun PositionModel.safeCopy(new: PositionModel?): PositionModel {
+internal fun PositionModel.safeCopy(new: PositionModel?): PositionModel {
     val old = this
     return old.copy(
         x = new?.x ?: old.x,
         y = new?.y ?: old.y)
 }
 
-fun VelocityModel.safeCopy(new: VelocityModel?): VelocityModel {
+internal fun VelocityModel.safeCopy(new: VelocityModel?): VelocityModel {
     val old = this
     return old.copy(
         x = new?.x ?: old.x,
         y = new?.y ?: old.y)
 }
 
-fun FoodModel.safeCopy(new: FoodModel): FoodModel {
+internal fun FoodModel.safeCopy(new: FoodModel): FoodModel {
     val old = this
     return old.copy(
         position = this.position!!.safeCopy(new.position),

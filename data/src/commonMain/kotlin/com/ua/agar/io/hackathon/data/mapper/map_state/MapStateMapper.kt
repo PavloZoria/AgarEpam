@@ -10,7 +10,7 @@ import com.ua.epam.agar.io.hackathon.core.entity.mapper.Mapper
 import com.ua.epam.agar.io.hackathon.core.entity.mapper.mapListFrom
 import com.ua.epam.agar.io.hackathon.core.entity.mapper.mapListTo
 
-class MapStateMapper(
+internal class MapStateMapper(
     private val cellMapper: CellMapper = CellMapper(),
     private val foodMapper: FoodMapper = FoodMapper(),
 ) :

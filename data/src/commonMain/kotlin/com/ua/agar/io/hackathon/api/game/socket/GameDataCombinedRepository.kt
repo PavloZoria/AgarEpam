@@ -5,7 +5,7 @@ import com.ua.agar.io.hackathon.api.game.socket.model.data.GameConfigModel
 import com.ua.agar.io.hackathon.api.game.socket.model.data.DesiredCellsStateModel
 import com.ua.agar.io.hackathon.api.game.socket.model.data.MapStateModel
 
-class GameDataCombinedRepository(
+internal class GameDataCombinedRepository(
     private val gameDataRepository: GameDataRepository,
     private val mapStorage: Storage<MapStateModel>,
 ) : GameDataRepository {
@@ -13,7 +13,7 @@ class GameDataCombinedRepository(
         gameDataRepository.connectTransportToRoom(room)
 
     override suspend fun gameConfigFromTransport(): GameConfigModel =
-        gameDataRepository.gameConfigFromTransport()//TODO need to be stored
+        gameDataRepository.gameConfigFromTransport()
 
     override suspend fun mapStateFromTransport(): MapStateModel {
         val optimizedData = gameDataRepository.mapStateFromTransport()
@@ -25,7 +25,7 @@ class GameDataCombinedRepository(
         val optimizedData = gameDataRepository.transportGameTurn(desiredCellsState)
         mapStorage.set(optimizedData)
         val get = mapStorage.get()
-        println("GameDataCombinedRepository -> optimizedData: ${optimizedData.cellsOnMap.size}, data: ${get.cellsOnMap.size}")
+        // println("GameDataCombinedRepository -> optimizedData: ${optimizedData.cellsOnMap.size}, data: ${get.cellsOnMap.size}")
         return get
     }
 
