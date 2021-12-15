@@ -4,3 +4,5 @@
 /.gradle
 /.idea
 /local.properties
+*.hprof
+*.heapprofd

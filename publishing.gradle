@@ -1,0 +1,18 @@
+apply plugin: 'maven-publish' // Apply this plugin at the top of your library build.gradle
+
+def githubProperties = new Properties()
+githubProperties.load(new FileInputStream(rootProject.file("github.properties")))
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+
+            url = uri(githubProperties['gitHubUri'])
+            credentials {
+                username = githubProperties['gitHubUser']
+                password = githubProperties['gitHubKey']
+            }
+        }
+    }
+}

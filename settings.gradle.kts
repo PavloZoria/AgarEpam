@@ -16,5 +16,5 @@ rootProject.name = "agar-library"
 
 include("core")
 include("data")
-include("agar-epam-library")
+include("engine-agar-epam")
 include("agar-epam")

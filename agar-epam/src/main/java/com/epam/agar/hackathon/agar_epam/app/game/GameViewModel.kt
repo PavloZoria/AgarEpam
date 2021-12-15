@@ -1,11 +1,10 @@
 package com.epam.agar.hackathon.agar_epam.app.game
 
 import androidx.lifecycle.ViewModel
-import com.ua.agar.io.hackathon.GameEngine
-import com.ua.epam.agar.io.hackathon.core.repository.GameRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
+import ua.com.epam.agar.engine.GameEngine
 
 class GameViewModel : ViewModel() {
     private val _roomId: MutableStateFlow<String> = MutableStateFlow("")

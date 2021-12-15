@@ -1,13 +1,13 @@
 package com.epam.agar.hackathon.agar_epam.app.game.cell
 
-import com.ua.epam.agar.io.hackathon.core.entity.CellActivity
-import com.ua.epam.agar.io.hackathon.core.entity.cell.Cell
-import com.ua.epam.agar.io.hackathon.core.entity.cell.MyCell
-import com.ua.epam.agar.io.hackathon.core.entity.distanceTo
-import com.ua.epam.agar.io.hackathon.core.entity.main.DesiredCellsState
-import com.ua.epam.agar.io.hackathon.core.entity.main.MapState
-import com.ua.epam.agar.io.hackathon.core.entity.public_api.CellLogic
-import com.ua.epam.agar.io.hackathon.core.printLine
+import ua.com.epam.agar.hackathon.core.entity.cell.Cell
+import ua.com.epam.agar.hackathon.core.entity.cell.MyCell
+import ua.com.epam.agar.hackathon.core.entity.cell.property.CellActivity
+import ua.com.epam.agar.hackathon.core.entity.cell.property.distanceTo
+import ua.com.epam.agar.hackathon.core.entity.main.DesiredCellsState
+import ua.com.epam.agar.hackathon.core.entity.main.MapState
+import ua.com.epam.agar.hackathon.core.entity.public_api.CellLogic
+import ua.com.epam.agar.hackathon.core.printLine
 
 /**
  * Test cell that search for the closest food and eat it

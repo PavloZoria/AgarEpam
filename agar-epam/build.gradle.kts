@@ -1,3 +1,7 @@
+import java.io.File
+import java.io.FileInputStream
+import java.util.*
+
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -5,11 +9,29 @@ plugins {
     id("kotlin-kapt")
 }
 
+val prop = Properties().apply {
+    load(FileInputStream(File(rootProject.rootDir, "github.properties")))
+}
+val gitHubUser: String by prop
+val gitHubKey: String by prop
+val gitHubUri:String by prop
+
 repositories {
     gradlePluginPortal()
     google()
     mavenCentral()
     maven(url = "https://jitpack.io")
+//    mavenLocal()
+    maven {
+        println("gitHubUri: $gitHubUri, gitHubUser: $gitHubUser, gitHubKey: $gitHubKey")
+        name = "GitHubPackages"
+        url = uri("https://maven.pkg.github.com/AgarEpam")
+
+        credentials {
+            username = gitHubUser
+            password = gitHubKey
+        }
+    }
 }
 
 android {
@@ -44,7 +66,9 @@ android {
 }
 
 dependencies {
-    implementation(project(":agar-epam-library"))
+    // implementation(project(":agar-epam-library"))
+//    implementation("com.ua.agar.io.agar_epam_library:agar-epam-library:0.0.1")
+    implementation("ua.com.epam.agar.engine:engine-agar-epam:0.0.1")
     implementation("androidx.appcompat:appcompat:1.4.0")
     implementation("com.google.android.material:material:1.6.0-alpha01")
     implementation("androidx.constraintlayout:constraintlayout:2.1.2")
