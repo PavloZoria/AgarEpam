@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".app.game.GameFragment"
+        android:padding="24dp">
+
+        <EditText android:layout_width="0dp"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/editText"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  app:layout_constraintStart_toStartOf="parent"
+                  app:layout_constraintTop_toTopOf="parent"
+                  android:singleLine="true"
+                  android:hint="Room Id"
+                  app:layout_constraintHorizontal_bias="0.5"
+                  app:layout_constraintBottom_toTopOf="@+id/startGameButton"
+                  app:layout_constraintVertical_chainStyle="packed"/>
+
+        <Button android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Start"
+                app:layout_constraintTop_toBottomOf="@+id/editText"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:id="@+id/startGameButton"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintBottom_toTopOf="@+id/stopGameButton"
+                app:layout_constraintEnd_toStartOf="@+id/startedStatus"
+                app:layout_constraintHorizontal_chainStyle="packed"/>
+
+        <com.epam.agar.hackathon.agar_epam.app.widget.TireScanStatusComponent
+            app:layout_constraintStart_toEndOf="@+id/startGameButton"
+            app:layout_constraintBottom_toBottomOf="@+id/startGameButton"
+            android:layout_height="24dp"
+            android:layout_width="24dp"
+            android:layout_marginStart="16dp" android:id="@+id/startedStatus"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/startGameButton"
+            android:layout_marginVertical="16dp"/>
+
+        <Button android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/stopGameButton"
+                android:text="Stop"
+                app:layout_constraintTop_toBottomOf="@+id/startGameButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                android:layout_marginVertical="16dp"
+                app:layout_constraintEnd_toStartOf="@+id/stoppedStatus"
+                app:layout_constraintHorizontal_chainStyle="packed"/>
+
+        <com.epam.agar.hackathon.agar_epam.app.widget.TireScanStatusComponent
+            app:layout_constraintStart_toEndOf="@+id/stopGameButton"
+            app:layout_constraintBottom_toBottomOf="@+id/stopGameButton"
+            android:layout_height="24dp"
+            android:layout_width="24dp"
+            android:id="@+id/stoppedStatus"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/stopGameButton"
+            android:layout_marginStart="16dp"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
