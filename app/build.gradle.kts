@@ -38,7 +38,7 @@ android {
     compileSdkVersion(31)
 
     defaultConfig {
-        applicationId = "com.epam.agar.hackathon.agar_epam.playground"
+        applicationId = "com.epam.agar.hackathon.agar_epam"
         minSdkVersion(24)
         targetSdkVersion(31)
         versionCode = 1
@@ -68,7 +68,7 @@ android {
 dependencies {
     // implementation(project(":agar-epam-library"))
 //    implementation("com.ua.agar.io.agar_epam_library:agar-epam-library:0.0.1")
-    implementation("com.ua.agar.io.agar_epam_library.api:agar-epam-library:0.0.1")
+    implementation("ua.com.epam.agar.engine:engine-agar-epam:0.0.1")
     implementation("androidx.appcompat:appcompat:1.4.0")
     implementation("com.google.android.material:material:1.6.0-alpha01")
     implementation("androidx.constraintlayout:constraintlayout:2.1.2")
