@@ -13,6 +13,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromJsonElement
 import kotlinx.serialization.json.encodeToJsonElement
 import ua.com.epam.agar.hackathon.api.game.socket.WebSocket
+import ua.com.epam.agar.hackathon.data.game.TickModel
 
 internal class GameWebSocketAsAPI(
     private val webSocket: WebSocket<WebSocketModel>,
@@ -21,12 +22,12 @@ internal class GameWebSocketAsAPI(
     private val mapState: Flow<MapStateModel> = webSocket
         .parseEntity(WebSocketKey.GAME_DATA) { valueJson ->
             // printLine("mapState: $valueJson")
-            Json.decodeFromJsonElement(valueJson)
+            Json { ignoreUnknownKeys = true }.decodeFromJsonElement<MapStateModel>(valueJson)
         }
 
     private val gameConfig: Flow<GameConfigModel> = webSocket
         .parseEntity(WebSocketKey.GAME_CONFIG) {
-            Json.decodeFromJsonElement(it)
+            Json { ignoreUnknownKeys = true }.decodeFromJsonElement(it)
         }
 
     // init {

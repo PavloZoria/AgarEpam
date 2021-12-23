@@ -74,10 +74,12 @@ kotlin {
             dependencies {
 //                 api(project(":core"))
 //                 implementation(project(":data"))
-                api("ua.com.epam.agar.core:core:0.0.1") {
+                api("ua.com.epam.agar.core:core:0.0.2") {
                     isTransitive = true
                 }
-                implementation("ua.com.epam.agar.data:data:0.0.1")
+                implementation("ua.com.epam.agar.data:data:0.0.2") {
+                    isTransitive = true
+                }
 
                 implementation(kotlin("stdlib-common"))
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinxCoroutinesVersion")

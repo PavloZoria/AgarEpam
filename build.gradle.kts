@@ -40,7 +40,7 @@ allprojects {
             }
         }
         // maven(url = "https://kotlin.bintray.com/kotlinx")
-        mavenLocal()
+//        mavenLocal()
     }
 
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {

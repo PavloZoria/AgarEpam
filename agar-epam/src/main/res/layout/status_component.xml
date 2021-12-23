@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="invisible"
-        tools:src="@drawable/ic_tire_check_status_ok"
+        tools:src="@drawable/status_ok"
         tools:visibility="visible" />
 
     <ProgressBar

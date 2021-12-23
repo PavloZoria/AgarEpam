@@ -15,11 +15,11 @@ internal class MapStateMapper(
     private val foodMapper: FoodMapper = FoodMapper(),
 ) : Mapper<MapState, MapStateModel> {
     override fun mapFrom(item: MapStateModel): MapState = with(item) {
-        val mapFrom = cellsOnMap.mapListFrom(cellMapper)
+        val mapFrom = cellsOnMap?.mapListFrom(cellMapper) ?: emptyList()
 
         val myCells = mapFrom.filterIsInstance<MyCell>()
         val alienCells = mapFrom.filterIsInstance<AlienCell>()
-        val foodList = food.mapListFrom(foodMapper)
+        val foodList = food?.mapListFrom(foodMapper) ?: emptyList()
         MapState(gameTick = tickNumber, myCells, alienCells, foodList)
     }
 
@@ -28,6 +28,6 @@ internal class MapStateMapper(
         val alien = alienCells.mapListTo(cellMapper)
 
         val foodList = food.mapListTo(foodMapper)
-        MapStateModel(tickNumber = gameTick, ArrayList(my + alien), ArrayList(foodList))
+        MapStateModel(tickNumber = gameTick, cellsOnMap = HashSet(my + alien), food = HashSet(foodList))
     }
 }

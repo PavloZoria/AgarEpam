@@ -12,8 +12,10 @@ import kotlinx.serialization.Serializable
 internal data class MapStateModel(
     @SerialName("tick")
     val tickNumber: Int,
+    @SerialName("lastReceivedTick")
+    val lastReceivedTick: Int? = null,
     @SerialName("cells")
-    val cellsOnMap: ArrayList<CellModel>,
+    val cellsOnMap: HashSet<CellModel>? = null,
     @SerialName("food")
-    val food: ArrayList<FoodModel>,
+    val food: HashSet<FoodModel>? = null,
 ) : WebSocketData()

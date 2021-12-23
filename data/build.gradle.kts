@@ -57,7 +57,9 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api("ua.com.epam.agar.core:core:0.0.1")
+                api("ua.com.epam.agar.core:core:0.0.2") {
+                    isTransitive = true
+                }
 
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinxCoroutinesVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-protobuf:$kotlinxSerializationVersion")

@@ -4,5 +4,6 @@ internal enum class WebSocketKey(val key: String) {
     GAME_DATA("game_data"),
     GAME_CONFIG("game_config"),
     CONNECT_TO_ROOM("connect_to_room"),
-    PLAYER_ACTION("player_action");
+    PLAYER_ACTION("player_action"),
+    DATA_RECEIVED("data_received");
 }

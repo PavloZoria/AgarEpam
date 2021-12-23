@@ -1,4 +1,4 @@
-package com.epam.agar.hackathon.agar_epam.app.game.cell
+package ua.com.epam.agar.app.game.cell
 
 import ua.com.epam.agar.hackathon.core.entity.cell.Cell
 import ua.com.epam.agar.hackathon.core.entity.cell.MyCell

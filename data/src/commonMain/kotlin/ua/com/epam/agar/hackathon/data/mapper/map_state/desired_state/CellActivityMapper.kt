@@ -6,10 +6,11 @@ import ua.com.epam.agar.hackathon.data.cell.property.CellActivityModel
 import ua.com.epam.agar.hackathon.data.cell.property.GrowIntentionModel
 import ua.com.epam.agar.hackathon.data.mapper.map_state.cell.VelocityMapper
 
-internal class CellActivityMapper(private val velocityMapper: VelocityMapper = VelocityMapper()) :
-    Mapper<CellActivity, CellActivityModel> {
+internal class CellActivityMapper(
+    private val velocityMapper: VelocityMapper = VelocityMapper(),
+    private val additionalActionMapper: MoveActionMapper = MoveActionMapper()
+) : Mapper<CellActivity, CellActivityModel> {
     override fun mapFrom(item: CellActivityModel): CellActivity = with(item) {
-        // CellActivity(CellId(cellId.id), Velocity(velocity?.x ?: 0, velocity?.y ?: 0))
         TODO("No need to have this mapping")
     }
 
@@ -23,9 +24,10 @@ internal class CellActivityMapper(private val velocityMapper: VelocityMapper = V
                     eatEfficiency = growIntention?.eatEfficiency,
                     maxSpeed = growIntention?.maxSpeed,
                     power = growIntention?.power,
-                    mass = growIntention?.mass)
+                    mass = growIntention?.mass
+                )
             },
-            additionalAction = null//TODO
+            additionalAction = additionalActionMapper.mapTo(item.additionalAction)
         )
     }
 }

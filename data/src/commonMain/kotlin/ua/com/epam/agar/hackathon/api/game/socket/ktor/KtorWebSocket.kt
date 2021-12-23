@@ -7,14 +7,10 @@ import io.ktor.client.features.websocket.WebSockets
 import io.ktor.http.DEFAULT_PORT
 import io.ktor.http.cio.websocket.CloseReason
 import io.ktor.http.cio.websocket.Frame
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancelChildren
+import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.channels.ClosedReceiveChannelException
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.launch
 import ua.com.epam.agar.hackathon.core.entity.mapper.Mapper
 import ua.com.epam.agar.hackathon.core.entity.mapper.mapFrom
 import ua.com.epam.agar.hackathon.core.entity.mapper.mapToSafely
@@ -37,6 +33,7 @@ internal class KtorWebSocket<Model>(
         install(WebSockets)
     })
 
+    @InternalCoroutinesApi
     override suspend fun openSocket() {
         try {
             wsClient.connect(host = host, port = port, path = path)

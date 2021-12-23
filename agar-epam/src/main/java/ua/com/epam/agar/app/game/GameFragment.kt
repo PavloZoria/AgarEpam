@@ -1,4 +1,4 @@
-package com.epam.agar.hackathon.agar_epam.app.game
+package ua.com.epam.agar.app.game
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,8 +8,8 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.epam.agar.hackathon.agar_epam.app.util.collectWhenResumed
-import com.epam.agar.hackathon.agar_epam.databinding.FragmentGameBinding
+import ua.com.epam.agar.app.util.collectWhenResumed
+import ua.com.epam.agar_epam.databinding.FragmentGameBinding
 
 class GameFragment : Fragment() {
     private lateinit var binding: FragmentGameBinding
@@ -25,12 +25,6 @@ class GameFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // lifecycleScope.launch {
-        //     GameEngine.startGame("testRoom1")
-        //     delay(20_000)
-        //     GameEngine.stopGame()
-        // }
         viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(GameViewModel::class.java)
         setUpView()
         setUpViewModel()

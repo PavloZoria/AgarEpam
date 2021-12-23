@@ -1,4 +1,4 @@
-package com.epam.agar.hackathon.agar_epam.app.game
+package ua.com.epam.agar.app.game
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.Flow

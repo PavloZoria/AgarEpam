@@ -1,8 +1,8 @@
-package com.epam.agar.hackathon.agar_epam.app
+package ua.com.epam.agar.app
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.epam.agar.hackathon.agar_epam.R
+import ua.com.epam.agar_epam.R
 
 class MainActivity : AppCompatActivity() {
 

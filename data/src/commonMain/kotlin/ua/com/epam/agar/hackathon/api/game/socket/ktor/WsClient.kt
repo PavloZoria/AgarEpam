@@ -47,7 +47,7 @@ internal class WsClient(private val client: HttpClient) {
         }
     }
 
-    @OptIn(InternalCoroutinesApi::class)
+    @InternalCoroutinesApi
     suspend fun receive(onReceive: (input: Frame.Text) -> Unit) {
         session?.incoming?.consumeAsFlow()?.collect(object : FlowCollector<Frame> {
             override suspend fun emit(value: Frame) {

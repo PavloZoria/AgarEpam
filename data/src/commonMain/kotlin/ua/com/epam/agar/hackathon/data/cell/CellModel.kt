@@ -5,34 +5,94 @@ import ua.com.epam.agar.hackathon.data.cell.property.VelocityModel
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+//Created class in this way in order to calculate hashcode based
+// only on id in order to make work with a HashSet easier
 @Serializable
 internal data class CellModel(
     @SerialName("id")
-    val cellId: String? = null,
+    val cellId: String? = null
+) {
+
     @SerialName("player")
-    val player: String? = null,
+    var player: String? = null
+        private set
+
     @SerialName("own")
-    val own: Boolean? = null,
+    var own: Boolean? = null
+        private set
 
     @SerialName("mass")
-    val mass: Float? = null,
+    var mass: Float? = null
+        private set
+
     @SerialName("radius")
-    val radius: Float? = null,
+    var radius: Float? = null
+        private set
+
     @SerialName("position")
-    val position: PositionModel? = null,
+    var position: PositionModel? = null
+        private set
+
     @SerialName("velocity")
-    val velocity: VelocityModel? = null,
+    var velocity: VelocityModel? = null
+        private set
+
     @SerialName("availableEnergy")
-    val availableEnergy: Float? = null,
+    var availableEnergy: Float? = null
+        private set
+
     @SerialName("canSplit")
-    val canSplit: Boolean? = null,
+    var canSplit: Boolean? = null
+        private set
+
     @SerialName("canMerge")
-    val canMerge: Boolean? = null,
+    var canMerge: Boolean? = null
+        private set
+
     @SerialName("speed")
-    val speed: Float? = null,
+    var speed: Float? = null
+        private set
+
+    @SerialName("maxSpeed")
+    var maxSpeed: Float? = null
+        private set
+
     @SerialName("eatEfficiency")
-    val eatEfficiency: Float? = null,
+    var eatEfficiency: Float? = null
+        private set
 
     @SerialName("del")
-    val deleted: Boolean? = null
-)
+    var deleted: Boolean? = null
+        private set
+
+    constructor(
+        cellId: String?,
+        player: String?,
+        own: Boolean?,
+        mass: Float?,
+        radius: Float?,
+        position: PositionModel?,
+        velocity: VelocityModel?,
+        availableEnergy: Float?,
+        canSplit: Boolean?,
+        canMerge: Boolean?,
+        speed: Float?,
+        maxSpeed: Float?,
+        eatEfficiency: Float?,
+        deleted: Boolean?
+    ) : this(cellId = cellId) {
+        this.player = player
+        this.own = own
+        this.mass = mass
+        this.radius = radius
+        this.position = position
+        this.velocity = velocity
+        this.availableEnergy = availableEnergy
+        this.canSplit = canSplit
+        this.canMerge = canMerge
+        this.speed = speed
+        this.maxSpeed = maxSpeed
+        this.eatEfficiency = eatEfficiency
+        this.deleted = deleted
+    }
+}

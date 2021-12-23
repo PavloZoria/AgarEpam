@@ -6,4 +6,4 @@ interface MapFrom<From, To> {
 
 fun <To, From> From.mapFrom(mapper: MapFrom<From, To>): To = run { mapper.mapFrom(this) }
 
-fun <To, From> List<From>.mapListFrom(mapper: MapFrom<From, To>): List<To> = map { mapper.mapFrom(it) }
+fun <To, From> Iterable<From>.mapListFrom(mapper: MapFrom<From, To>): List<To> = map { mapper.mapFrom(it) }

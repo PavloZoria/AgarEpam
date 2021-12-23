@@ -38,7 +38,11 @@ internal class MyCellMapper(
             eatEfficiency = property.eatEfficiency,
             availableEnergy = availableEnergy,
             canSplit = canSplit,
-            canMerge = canMerge
+            canMerge = canMerge,
+            player = null,
+            own = true,
+            maxSpeed = null,
+            deleted = null
         )
     }
 }

@@ -1,4 +1,4 @@
-package com.epam.agar.hackathon.agar_epam.app.util
+package ua.com.epam.agar.app.util
 
 import androidx.lifecycle.LifecycleCoroutineScope
 import kotlinx.coroutines.CoroutineScope

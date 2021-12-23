@@ -12,6 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import ua.com.epam.agar.hackathon.api.game.socket.game.tick.DefaultGameTickHandler
 import ua.com.epam.agar.hackathon.core.entity.main.MapState
 import ua.com.epam.agar.hackathon.core.entity.public_api.CellLogic
 import ua.com.epam.agar.hackathon.core.game.Engine
@@ -25,7 +26,8 @@ class DefaultEngine(private val cellLogic: CellLogic) : Engine {
     private val gameDataRepository: GameDataRepository = GameWebSocketAsAPI(webSocket)
 
     private val mapStorage = ComparatorMapStorage(storage = LocalMapStateStorage())
-    private val gameDataCombined = GameDataCombinedRepository(gameDataRepository, mapStorage = mapStorage)
+    private val gameDataCombined =
+        GameDataCombinedRepository(gameDataRepository, mapStorage = mapStorage, tickHandler = DefaultGameTickHandler(webSocket))
     private val webSocketRepo = GameWebSocketInteractor(gameDataCombined)
 
     private val gameRepository: GameRepository = DefaultGameRepository(webSocketRepo)
@@ -42,6 +44,10 @@ class DefaultEngine(private val cellLogic: CellLogic) : Engine {
     }
 
     override suspend fun startGame() = withContext(Dispatchers.Default) {
+        if (startedJob?.isActive == true) {
+            printLine("The game is already started! Stop the game in order to start it!")
+            return@withContext
+        }
         playTheGame()
     }
 
@@ -61,7 +67,7 @@ class DefaultEngine(private val cellLogic: CellLogic) : Engine {
     override suspend fun stopGame() = withContext(Dispatchers.Default) {
         printLine("stopGame")
         runCatching {
-            gameDataRepository.disconnectFromTransport("Stop game!")
+            gameDataCombined.disconnectFromTransport("Stop game!")
             startedJob?.cancel()
             printLine("stopGame: finished!")
         }.onFailure {
