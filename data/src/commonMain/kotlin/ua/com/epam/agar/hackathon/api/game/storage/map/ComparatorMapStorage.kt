@@ -1,58 +1,63 @@
 package ua.com.epam.agar.hackathon.api.game.storage.map
 
+import ua.com.epam.agar.hackathon.api.game.socket.model.local.LocalMapStateModel
+import ua.com.epam.agar.hackathon.api.game.socket.model.local.LocalMapStateModelMapper
 import ua.com.epam.agar.hackathon.api.game.storage.Storage
 import ua.com.epam.agar.hackathon.data.FoodModel
+import ua.com.epam.agar.hackathon.data.cell.CellModel
+import ua.com.epam.agar.hackathon.api.game.socket.model.remote.data.MapStateModel
+import ua.com.epam.agar.hackathon.core.printLine
 import ua.com.epam.agar.hackathon.data.cell.property.PositionModel
 import ua.com.epam.agar.hackathon.data.cell.property.VelocityModel
-import ua.com.epam.agar.hackathon.data.cell.CellModel
-import ua.com.epam.agar.hackathon.api.game.socket.model.data.MapStateModel
-import ua.com.epam.agar.hackathon.core.printLine
 
 internal typealias NewStateMapStateModel = MapStateModel
 
-internal class ComparatorMapStorage(private val storage: Storage<MapStateModel>) : Storage<NewStateMapStateModel> {
+internal class ComparatorMapStorage(
+    private val storage: Storage<LocalMapStateModel>,
+    private val mapper: LocalMapStateModelMapper
+) : Storage<NewStateMapStateModel> {
 
-    override suspend fun set(newState: NewStateMapStateModel) {
+    override suspend fun set(value: NewStateMapStateModel) {
+        val newState = value
         val mapStateModel = if (storage.exist()) {
-            val mapStateToBeRefreshed = storage.get().copy(tickNumber = newState.tickNumber).apply {
-                println("ComparatorMapStorage: set -> newState: $newState \n savedState: $this")
-                cellsOnMap?.refreshCells(newState)
-                food?.refreshFood(newState)
-            }
+            val dataFromStorage = storage.get()
+            val mapStateToBeRefreshed =
+                dataFromStorage.copy(
+                    tickNumber = newState.tickNumber,
+                    lastReceivedTick = newState.lastReceivedTick ?: dataFromStorage.lastReceivedTick
+                ).apply {
+                    println("ComparatorMapStorage: set -> newState: $newState \n savedState: $this")
+                    cellsOnMap?.refreshCells(newState)
+                    food?.refreshFood(newState)
+                }
             mapStateToBeRefreshed
         } else {
-            newState
+            mapper.mapFrom(newState)
         }
         storage.set(mapStateModel)
     }
 
-    override suspend fun get(): NewStateMapStateModel = storage.get()
+    override suspend fun get(): NewStateMapStateModel = mapper.mapTo(storage.get())
 
     override suspend fun exist(): Boolean = storage.exist()
 
     override fun invalidate() = storage.invalidate()
 
 
-    private fun HashSet<FoodModel>.refreshFood(newState: NewStateMapStateModel) {
+    private fun MutableMap<String, FoodModel>.refreshFood(newState: NewStateMapStateModel) {
         val old = this
         old.removeDeletedFood(newState)
 
         val freshNotDeletedFood = newState.notDeletedFood()
 
         freshNotDeletedFood?.map { new ->
-            old.findFoodById(new.id)?.safeCopy(new) ?: new
+            new.id to (old.findFoodById(new.id)?.safeCopy(new) ?: new)
         }?.run {
-            addAll(this)
-            forEach {
-                if (old.contains(it)) {
-                    old.remove(it)
-                }
-                old.add(it)
-            }
+            putAll(this)
         }
     }
 
-    private fun HashSet<CellModel>.refreshCells(
+    private fun MutableMap<String, CellModel>.refreshCells(
         newState: NewStateMapStateModel
     ) {
         val old = this
@@ -61,25 +66,17 @@ internal class ComparatorMapStorage(private val storage: Storage<MapStateModel>)
         newState
             .notDeletedCell()
             ?.map { new ->
-                old.findCellModelById(new.cellId)?.safeCopy(new) ?: new
+                new.cellId to (old.findCellModelById(new.cellId)?.safeCopy(new) ?: new)
             }?.run {
-                addAll(this)
-                forEach {
-                    if (old.contains(it)) {
-                        old.remove(it)
-                    }
-                    old.add(it)
-                }
+                putAll(this)
             }
     }
 
-    private fun Iterable<CellModel>.findCellModelById(cellId: String?) =
-        firstOrNull { it.cellId == cellId }
+    private fun Map<String, CellModel>.findCellModelById(cellId: String?) = get(cellId)
 
-    private fun Iterable<FoodModel>.findFoodById(id: String?) =
-        firstOrNull { it.id == id }
+    private fun Map<String, FoodModel>.findFoodById(id: String?) = get(id)
 
-    private fun HashSet<CellModel>.removeDeletedCell(
+    private fun MutableMap<String, CellModel>.removeDeletedCell(
         newState: NewStateMapStateModel,
     ) = newState
         .cellsOnMap
@@ -88,11 +85,11 @@ internal class ComparatorMapStorage(private val storage: Storage<MapStateModel>)
             it.deleted == true
         }
         ?.forEach {
-            val deleted = this.remove(it)
+            val deleted = this.remove(it.cellId)
             printLine("Deleted: $deleted, $it")
         }
 
-    private fun HashSet<FoodModel>.removeDeletedFood(
+    private fun MutableMap<String, FoodModel>.removeDeletedFood(
         newState: NewStateMapStateModel,
     ) = newState
         .food
@@ -100,7 +97,7 @@ internal class ComparatorMapStorage(private val storage: Storage<MapStateModel>)
             it.deleted == true
         }
         ?.forEach {
-            this.remove(it)
+            this@removeDeletedFood.remove(it.id)
         }
 
     private fun NewStateMapStateModel.notDeletedFood() =
@@ -114,10 +111,10 @@ internal class ComparatorMapStorage(private val storage: Storage<MapStateModel>)
         }
 }
 
+
 internal fun CellModel.safeCopy(new: CellModel): CellModel {
     val old = this
-    return CellModel(
-        cellId = old.cellId,
+    return old.copy(
         mass = new.mass ?: old.mass,
         radius = new.radius ?: old.radius,
         position = old.position!!.safeCopy(new.position),
@@ -128,7 +125,7 @@ internal fun CellModel.safeCopy(new: CellModel): CellModel {
         speed = new.speed ?: old.speed,
         maxSpeed = new.maxSpeed ?: old.maxSpeed,
         eatEfficiency = new.eatEfficiency ?: old.eatEfficiency,
-        deleted = new.deleted ?: old.deleted ?: false,
+        deleted = new.deleted ?: old.deleted,
         own = old.own,
         player = old.player,
     )

@@ -7,8 +7,8 @@ import ua.com.epam.agar.hackathon.core.entity.mapper.Mapper
 import ua.com.epam.agar.hackathon.data.cell.CellModel
 
 internal class CellMapper(
-    private val myCellMapper: MyCellMapper = MyCellMapper(),
-    private val alienCellMapper: AlienCellMapper = AlienCellMapper(),
+    private val myCellMapper: MyCellMapper,
+    private val alienCellMapper: AlienCellMapper,
 ) : Mapper<Cell, CellModel> {
     override fun mapFrom(item: CellModel): Cell = with(item) {
         if (own == true) {

@@ -74,13 +74,13 @@ android {
 }
 
 dependencies {
-    api("ua.com.epam.agar.engine:engine-agar-epam:0.0.2") {
+    api("ua.com.epam.agar.engine:engine-agar-epam:0.0.3") {
         isTransitive = true
     }
-    api("ua.com.epam.agar.core:core:0.0.2") {
+    api("ua.com.epam.agar.core:core:0.0.3") {
         isTransitive = true
     }
-    implementation("ua.com.epam.agar.data:data:0.0.2")
+    implementation("ua.com.epam.agar.data:data:0.0.3")
 //    api(project(":engine-agar-epam"))
 
     implementation("androidx.appcompat:appcompat:1.4.0")

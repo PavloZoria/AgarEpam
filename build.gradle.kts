@@ -8,7 +8,7 @@ buildscript {
         google()
         mavenCentral()
         maven("https://kotlin.bintray.com/ktor")
-//        mavenLocal()
+        mavenLocal()
     }
     dependencies {
         classpath("com.android.tools.build:gradle:7.0.4")

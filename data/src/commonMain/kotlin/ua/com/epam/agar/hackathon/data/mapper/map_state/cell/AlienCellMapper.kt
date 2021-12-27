@@ -13,14 +13,15 @@ internal class AlienCellMapper(
 ) : Mapper<AlienCell, CellModel> {
     override fun mapFrom(item: CellModel): AlienCell = with(item) {
         AlienCell(
-            cellId = CellId(cellId ?: ""),
+            cellId = CellId(cellId),
             property = CellProperty(
                 mass = mass ?: 0f,
                 radius = radius ?: 0f,
                 speed = speed ?: 0f,
                 position = positionMapper.mapFrom(position),
                 velocity = velocityMapper.mapFrom(velocity) ?: Velocity.Default,
-                eatEfficiency = eatEfficiency ?: 0f
+                eatEfficiency = eatEfficiency ?: 0f,
+                power = item.power ?: 0f
             )
         )
     }
@@ -40,7 +41,8 @@ internal class AlienCellMapper(
             canSplit = null,
             canMerge = null,
             maxSpeed = null,
-            deleted = null
+            deleted = null,
+            power = property.power
         )
     }
 }

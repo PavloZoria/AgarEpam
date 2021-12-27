@@ -1,4 +1,4 @@
-package ua.com.epam.agar.hackathon.api.game.socket.model
+package ua.com.epam.agar.hackathon.api.game.socket.model.remote
 
 internal enum class WebSocketKey(val key: String) {
     GAME_DATA("game_data"),

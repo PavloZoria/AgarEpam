@@ -1,11 +1,11 @@
 package ua.com.epam.agar.hackathon.data.mapper.map_state.desired_state
 
-import ua.com.epam.agar.hackathon.api.game.socket.model.data.DesiredCellsStateModel
+import ua.com.epam.agar.hackathon.api.game.socket.model.remote.data.DesiredCellsStateModel
 import ua.com.epam.agar.hackathon.core.entity.main.DesiredCellsState
 import ua.com.epam.agar.hackathon.core.entity.mapper.Mapper
 import ua.com.epam.agar.hackathon.core.entity.mapper.mapListTo
 
-internal class DesiredCellStateMapper(private val mapper: CellActivityMapper = CellActivityMapper()) :
+internal class DesiredCellStateMapper(private val mapper: CellActivityMapper) :
     Mapper<DesiredCellsState, DesiredCellsStateModel> {
     override fun mapFrom(item: DesiredCellsStateModel): DesiredCellsState = with(item) {
         // DesiredCellsState(myCells.mapListFrom(mapper))

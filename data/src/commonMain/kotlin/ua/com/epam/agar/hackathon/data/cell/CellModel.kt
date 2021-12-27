@@ -5,94 +5,39 @@ import ua.com.epam.agar.hackathon.data.cell.property.VelocityModel
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-//Created class in this way in order to calculate hashcode based
-// only on id in order to make work with a HashSet easier
 @Serializable
 internal data class CellModel(
     @SerialName("id")
-    val cellId: String? = null
-) {
-
+    val cellId: String,
     @SerialName("player")
-    var player: String? = null
-        private set
-
+    val player: String? = null,
     @SerialName("own")
-    var own: Boolean? = null
-        private set
+    val own: Boolean? = null,
 
     @SerialName("mass")
-    var mass: Float? = null
-        private set
-
+    val mass: Float? = null,
     @SerialName("radius")
-    var radius: Float? = null
-        private set
-
+    val radius: Float? = null,
     @SerialName("position")
-    var position: PositionModel? = null
-        private set
-
+    val position: PositionModel? = null,
     @SerialName("velocity")
-    var velocity: VelocityModel? = null
-        private set
+    val velocity: VelocityModel? = null,
+    @SerialName("canSplit")
+    val canSplit: Boolean? = null,
+    @SerialName("canMerge")
+    val canMerge: Boolean? = null,
+    @SerialName("speed")
+    val speed: Float? = null,
 
     @SerialName("availableEnergy")
-    var availableEnergy: Float? = null
-        private set
-
-    @SerialName("canSplit")
-    var canSplit: Boolean? = null
-        private set
-
-    @SerialName("canMerge")
-    var canMerge: Boolean? = null
-        private set
-
-    @SerialName("speed")
-    var speed: Float? = null
-        private set
-
+    val availableEnergy: Float? = null,
     @SerialName("maxSpeed")
-    var maxSpeed: Float? = null
-        private set
-
+    val maxSpeed: Float? = null,
     @SerialName("eatEfficiency")
-    var eatEfficiency: Float? = null
-        private set
+    val eatEfficiency: Float? = null,
+    @SerialName("power")
+    val power: Float? = null,
 
     @SerialName("del")
-    var deleted: Boolean? = null
-        private set
-
-    constructor(
-        cellId: String?,
-        player: String?,
-        own: Boolean?,
-        mass: Float?,
-        radius: Float?,
-        position: PositionModel?,
-        velocity: VelocityModel?,
-        availableEnergy: Float?,
-        canSplit: Boolean?,
-        canMerge: Boolean?,
-        speed: Float?,
-        maxSpeed: Float?,
-        eatEfficiency: Float?,
-        deleted: Boolean?
-    ) : this(cellId = cellId) {
-        this.player = player
-        this.own = own
-        this.mass = mass
-        this.radius = radius
-        this.position = position
-        this.velocity = velocity
-        this.availableEnergy = availableEnergy
-        this.canSplit = canSplit
-        this.canMerge = canMerge
-        this.speed = speed
-        this.maxSpeed = maxSpeed
-        this.eatEfficiency = eatEfficiency
-        this.deleted = deleted
-    }
-}
+    val deleted: Boolean? = null
+)

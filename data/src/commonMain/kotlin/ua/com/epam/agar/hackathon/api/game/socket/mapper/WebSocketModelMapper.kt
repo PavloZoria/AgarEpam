@@ -1,7 +1,7 @@
 package ua.com.epam.agar.hackathon.api.game.socket.mapper
 
 import ua.com.epam.agar.hackathon.api.game.socket.ktor.SocketModelMapper
-import ua.com.epam.agar.hackathon.api.game.socket.model.WebSocketModel
+import ua.com.epam.agar.hackathon.api.game.socket.model.remote.WebSocketModel
 import io.ktor.http.cio.websocket.Frame
 import io.ktor.http.cio.websocket.readText
 import kotlinx.serialization.json.Json

@@ -3,6 +3,7 @@ package ua.com.epam.agar.app.game.cell
 import ua.com.epam.agar.hackathon.core.entity.Food
 import ua.com.epam.agar.hackathon.core.entity.cell.MyCell
 import ua.com.epam.agar.hackathon.core.entity.cell.property.CellActivity
+import ua.com.epam.agar.hackathon.core.entity.cell.property.GrowIntention
 import ua.com.epam.agar.hackathon.core.entity.cell.property.distanceTo
 import ua.com.epam.agar.hackathon.core.entity.cell.property.moveTo
 import ua.com.epam.agar.hackathon.core.entity.main.DesiredCellsState
@@ -18,12 +19,15 @@ class FatJohnyCell : CellLogic() {
             val from = myCell.property.position
             val target = findClosestFood(mapState, myCell)?.position
 
-
-            CellActivity(myCell.cellId, speed = 1.0f, velocity = from.moveTo(target))
+            CellActivity(
+                myCell.cellId,
+                speed = 1.0f,
+                velocity = from.moveTo(target),
+                growIntention = GrowIntention(mass = myCell.availableEnergy)
+            )
         }.run {
             DesiredCellsState(this)
         }
-        // return null
     }
 
     private fun findClosestFood(

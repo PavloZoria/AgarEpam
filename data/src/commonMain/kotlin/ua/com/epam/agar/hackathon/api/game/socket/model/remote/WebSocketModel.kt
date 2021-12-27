@@ -1,4 +1,4 @@
-package ua.com.epam.agar.hackathon.api.game.socket.model
+package ua.com.epam.agar.hackathon.api.game.socket.model.remote
 
 import ua.com.epam.agar.hackathon.api.game.socket.WebSocket
 import kotlinx.coroutines.flow.filter

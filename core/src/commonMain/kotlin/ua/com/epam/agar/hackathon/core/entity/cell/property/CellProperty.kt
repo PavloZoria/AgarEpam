@@ -6,5 +6,6 @@ data class CellProperty(
     val speed: Float,
     val position: Position,
     val velocity: Velocity,
-    val eatEfficiency: Float
+    val eatEfficiency: Float,
+    val power: Float
 )

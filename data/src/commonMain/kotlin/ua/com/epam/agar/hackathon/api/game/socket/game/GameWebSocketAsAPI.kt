@@ -1,23 +1,23 @@
 package ua.com.epam.agar.hackathon.api.game.socket.game
 
-import ua.com.epam.agar.hackathon.api.game.socket.model.WebSocketKey
-import ua.com.epam.agar.hackathon.api.game.socket.model.WebSocketModel
-import ua.com.epam.agar.hackathon.api.game.socket.model.parseEntity
-import ua.com.epam.agar.hackathon.api.game.socket.model.data.Room
-import ua.com.epam.agar.hackathon.api.game.socket.model.data.GameConfigModel
-import ua.com.epam.agar.hackathon.api.game.socket.model.data.DesiredCellsStateModel
-import ua.com.epam.agar.hackathon.api.game.socket.model.data.MapStateModel
+import ua.com.epam.agar.hackathon.api.game.socket.model.remote.WebSocketKey
+import ua.com.epam.agar.hackathon.api.game.socket.model.remote.WebSocketModel
+import ua.com.epam.agar.hackathon.api.game.socket.model.remote.parseEntity
+import ua.com.epam.agar.hackathon.api.game.socket.model.remote.data.Room
+import ua.com.epam.agar.hackathon.api.game.socket.model.remote.data.GameConfigModel
+import ua.com.epam.agar.hackathon.api.game.socket.model.remote.data.DesiredCellsStateModel
+import ua.com.epam.agar.hackathon.api.game.socket.model.remote.data.MapStateModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromJsonElement
 import kotlinx.serialization.json.encodeToJsonElement
 import ua.com.epam.agar.hackathon.api.game.socket.WebSocket
-import ua.com.epam.agar.hackathon.data.game.TickModel
+import ua.com.epam.agar.hackathon.api.game.socket.caching.RemoteGameDataRepository
 
 internal class GameWebSocketAsAPI(
     private val webSocket: WebSocket<WebSocketModel>,
-) : GameDataRepository {
+) : RemoteGameDataRepository {
 
     private val mapState: Flow<MapStateModel> = webSocket
         .parseEntity(WebSocketKey.GAME_DATA) { valueJson ->

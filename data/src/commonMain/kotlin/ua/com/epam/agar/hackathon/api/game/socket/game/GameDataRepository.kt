@@ -1,8 +1,8 @@
 package ua.com.epam.agar.hackathon.api.game.socket.game
 
-import ua.com.epam.agar.hackathon.api.game.socket.model.data.GameConfigModel
-import ua.com.epam.agar.hackathon.api.game.socket.model.data.DesiredCellsStateModel
-import ua.com.epam.agar.hackathon.api.game.socket.model.data.MapStateModel
+import ua.com.epam.agar.hackathon.api.game.socket.model.remote.data.GameConfigModel
+import ua.com.epam.agar.hackathon.api.game.socket.model.remote.data.DesiredCellsStateModel
+import ua.com.epam.agar.hackathon.api.game.socket.model.remote.data.MapStateModel
 
 internal interface GameDataRepository {
 

@@ -6,6 +6,7 @@ plugins {
     kotlin("multiplatform")
     kotlin("plugin.serialization")
     id("maven-publish")
+    id("io.kotest.multiplatform") version "5.0.2"
 }
 
 apply {
@@ -23,6 +24,7 @@ version = dataVersion
 val kotlinxCoroutinesVersion: String by rootProject
 val kotlinxSerializationVersion: String by rootProject
 val ktorVersion: String by rootProject
+val kotlinVersion: String by rootProject
 
 val prop = Properties().apply {
     load(FileInputStream(File(rootProject.rootDir, "github.properties")))
@@ -36,18 +38,18 @@ repositories {
     google()
     mavenCentral()
     maven("https://kotlin.bintray.com/ktor")
-//    mavenLocal()
+    mavenLocal()
 
-    maven {
-        println("gitHubUri: $gitHubUri, gitHubUser: $gitHubUser, gitHubKey: $gitHubKey")
-        name = "GitHubPackages"
-        url = uri("https://maven.pkg.github.com/AgarEpam")
-
-        credentials {
-            username = gitHubUser
-            password = gitHubKey
-        }
-    }
+//    maven {
+//        println("gitHubUri: $gitHubUri, gitHubUser: $gitHubUser, gitHubKey: $gitHubKey")
+//        name = "GitHubPackages"
+//        url = uri("https://maven.pkg.github.com/AgarEpam")
+//
+//        credentials {
+//            username = gitHubUser
+//            password = gitHubKey
+//        }
+//    }
 }
 
 kotlin {
@@ -57,7 +59,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api("ua.com.epam.agar.core:core:0.0.2") {
+                api("ua.com.epam.agar.core:core:0.0.3") {
                     isTransitive = true
                 }
 
@@ -66,6 +68,25 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinxSerializationVersion")
 
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
+
+                api("org.kodein.di:kodein-di:7.7.0") {
+                    isTransitive = true
+                }
+            }
+        }
+        val commonTest by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlin:kotlin-test-common:$kotlinVersion")
+                implementation("org.jetbrains.kotlin:kotlin-test-annotations-common:$kotlinVersion")
+//                implementation("org.junit.jupiter:junit-jupiter:5.7.0")
+                implementation("io.mockk:mockk-common:1.8.13.kotlin13")
+
+                implementation(kotlin("test-common"))
+                implementation(kotlin("test-annotations-common"))
+
+                implementation("io.kotest:kotest-assertions-core:5.0.2")
+                implementation("io.kotest:kotest-framework-engine:5.0.2")
+                implementation("io.kotest:kotest-framework-datatest:5.0.2")
             }
         }
         val jvmMain by getting {
@@ -74,6 +95,12 @@ kotlin {
                 implementation("io.ktor:ktor-client-core-jvm:$ktorVersion")
                 // implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinxCoroutinesVersion")
                 // implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:$kotlinxCoroutinesVersion")
+            }
+        }
+        val jvmTest by getting {
+            dependencies {
+                implementation(kotlin("test-junit"))
+                implementation("io.kotest:kotest-runner-junit5-jvm:5.0.2")
             }
         }
 
@@ -85,6 +112,8 @@ kotlin {
                 // implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:$kotlinxCoroutinesVersion")
             }
         }
+
+        val iosTest by getting
         // configure([ios_x86_64Main, ios_arm64Main]) {
         //     dependsOn iosMain
         // }

@@ -1,4 +1,4 @@
-package ua.com.epam.agar.hackathon.api.game.socket.model.data
+package ua.com.epam.agar.hackathon.api.game.socket.model.remote.data
 
 import ua.com.epam.agar.hackathon.data.cell.property.CellActivityModel
 import kotlinx.serialization.SerialName

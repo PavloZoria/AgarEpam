@@ -66,9 +66,7 @@ android {
 }
 
 dependencies {
-    // implementation(project(":agar-epam-library"))
-
-    implementation("ua.com.epam.agar.android_library:agar-epam:0.1.5")
+    implementation("ua.com.epam.agar.android_library:agar-epam:0.1.6")
 
 
     //for local testing

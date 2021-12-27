@@ -1,6 +1,6 @@
 package ua.com.epam.agar.hackathon.data.mapper.map_state
 
-import ua.com.epam.agar.hackathon.api.game.socket.model.data.MapStateModel
+import ua.com.epam.agar.hackathon.api.game.socket.model.remote.data.MapStateModel
 import ua.com.epam.agar.hackathon.core.entity.cell.AlienCell
 import ua.com.epam.agar.hackathon.core.entity.cell.MyCell
 import ua.com.epam.agar.hackathon.core.entity.main.MapState
@@ -10,9 +10,9 @@ import ua.com.epam.agar.hackathon.core.entity.mapper.mapListTo
 import ua.com.epam.agar.hackathon.data.mapper.map_state.cell.CellMapper
 import ua.com.epam.agar.hackathon.data.mapper.map_state.food.FoodMapper
 
-internal class MapStateMapper(
-    private val cellMapper: CellMapper = CellMapper(),
-    private val foodMapper: FoodMapper = FoodMapper(),
+internal class MapStateMapper (
+    private val cellMapper: CellMapper,
+    private val foodMapper: FoodMapper,
 ) : Mapper<MapState, MapStateModel> {
     override fun mapFrom(item: MapStateModel): MapState = with(item) {
         val mapFrom = cellsOnMap?.mapListFrom(cellMapper) ?: emptyList()

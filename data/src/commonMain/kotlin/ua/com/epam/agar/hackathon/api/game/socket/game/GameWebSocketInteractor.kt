@@ -1,5 +1,6 @@
 package ua.com.epam.agar.hackathon.api.game.socket.game
 
+import ua.com.epam.agar.hackathon.api.game.socket.caching.CachingGameDataRepository
 import ua.com.epam.agar.hackathon.core.entity.main.DesiredCellsState
 import ua.com.epam.agar.hackathon.core.entity.main.MapState
 import ua.com.epam.agar.hackathon.core.game.config.GameConfig
@@ -9,10 +10,10 @@ import ua.com.epam.agar.hackathon.data.mapper.map_state.MapStateMapper
 import ua.com.epam.agar.hackathon.data.mapper.map_state.desired_state.DesiredCellStateMapper
 
 internal class GameWebSocketInteractor(
-    private val gameDataRepository: GameDataRepository,
-    private val gameConfigMapper: GameConfigMapper = GameConfigMapper(),
-    private val mapStateMapper: MapStateMapper = MapStateMapper(),
-    private val desiredCellStateMapper: DesiredCellStateMapper = DesiredCellStateMapper()
+    private val gameDataRepository: CachingGameDataRepository,
+    private val gameConfigMapper: GameConfigMapper,
+    private val mapStateMapper: MapStateMapper,
+    private val desiredCellStateMapper: DesiredCellStateMapper
 ) : GameRepository {
     override suspend fun connectToRoom(room: String, isTraining: Boolean): GameConfig {
         val item = gameDataRepository.connectTransportToRoom(room)

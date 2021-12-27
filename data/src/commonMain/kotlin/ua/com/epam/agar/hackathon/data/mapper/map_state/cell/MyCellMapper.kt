@@ -19,7 +19,8 @@ internal class MyCellMapper(
                 speed = speed ?: 0f,
                 position = positionMapper.mapFrom(position),
                 velocity = velocityMapper.mapFrom(velocity)!!,
-                eatEfficiency = eatEfficiency ?: 0f
+                eatEfficiency = eatEfficiency ?: 0f,
+                power = power ?: 0f
             ),
             availableEnergy = availableEnergy ?: 0f,
             canSplit = canSplit ?: false,
@@ -33,6 +34,7 @@ internal class MyCellMapper(
             mass = property.mass,
             radius = property.radius,
             speed = property.speed,
+            power = property.power,
             position = positionMapper.mapTo(property.position),
             velocity = velocityMapper.mapTo(property.velocity),
             eatEfficiency = property.eatEfficiency,
