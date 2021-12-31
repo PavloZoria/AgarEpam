@@ -5,7 +5,7 @@ import ua.com.epam.agar.hackathon.core.entity.public_api.CellLogic
 interface GameEngine {
     fun initialize(cellLogic: CellLogic)
 
-    fun startGame(roomId: String)
+    fun startGame(roomId: String, isTesting: Boolean)
 
     fun stopGame()
 }

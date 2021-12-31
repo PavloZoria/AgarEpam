@@ -19,7 +19,7 @@ buildscript {
 }
 
 allprojects {
-    val prop = java.util.Properties().apply {
+    val prop = Properties().apply {
         load(java.io.FileInputStream(File(rootProject.rootDir, "github.properties")))
     }
     val gitHubUser: String by prop

@@ -21,5 +21,7 @@ class CellConfig(
     val maxPower: Float,
     val energyToPower: Float,
 
-    val volatilization: Float,
+    val maxVolatilization: Float,
+    val minVolatilization: Float,
+    val energyToVolatilization: Float,
 )

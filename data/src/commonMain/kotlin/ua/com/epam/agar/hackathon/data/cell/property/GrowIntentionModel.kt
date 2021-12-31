@@ -12,5 +12,7 @@ internal data class GrowIntentionModel(
     @SerialName("power")
     val power: Float? = null,
     @SerialName("mass")
-    val mass: Float? = null
+    val mass: Float? = null,
+    @SerialName("volatilization")
+    val volatilization: Float? = null
 )

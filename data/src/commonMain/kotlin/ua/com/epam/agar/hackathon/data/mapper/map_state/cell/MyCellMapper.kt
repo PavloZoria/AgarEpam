@@ -12,7 +12,7 @@ internal class MyCellMapper(
 ) : Mapper<MyCell, CellModel> {
     override fun mapFrom(item: CellModel): MyCell = with(item) {
         MyCell(
-            cellId = CellId(cellId ?: ""),
+            cellId = CellId(cellId),
             property = CellProperty(
                 mass = mass ?: 0f,
                 radius = radius ?: 0f,
@@ -24,7 +24,9 @@ internal class MyCellMapper(
             ),
             availableEnergy = availableEnergy ?: 0f,
             canSplit = canSplit ?: false,
-            canMerge = canMerge ?: false
+            canMerge = canMerge ?: false,
+            mergeTimer = mergeTimer ?: 0
+
         )
     }
 
@@ -41,6 +43,7 @@ internal class MyCellMapper(
             availableEnergy = availableEnergy,
             canSplit = canSplit,
             canMerge = canMerge,
+            mergeTimer = mergeTimer,
             player = null,
             own = true,
             maxSpeed = null,

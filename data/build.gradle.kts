@@ -29,6 +29,7 @@ val kotlinVersion: String by rootProject
 val prop = Properties().apply {
     load(FileInputStream(File(rootProject.rootDir, "github.properties")))
 }
+
 val gitHubUser: String by prop
 val gitHubKey: String by prop
 val gitHubUri:String by prop
@@ -37,19 +38,19 @@ repositories {
     gradlePluginPortal()
     google()
     mavenCentral()
-    maven("https://kotlin.bintray.com/ktor")
-    mavenLocal()
+//    maven("https://kotlin.bintray.com/ktor")
+//    mavenLocal()
 
-//    maven {
-//        println("gitHubUri: $gitHubUri, gitHubUser: $gitHubUser, gitHubKey: $gitHubKey")
-//        name = "GitHubPackages"
-//        url = uri("https://maven.pkg.github.com/AgarEpam")
-//
-//        credentials {
-//            username = gitHubUser
-//            password = gitHubKey
-//        }
-//    }
+    maven {
+        println("gitHubUri: $gitHubUri, gitHubUser: $gitHubUser, gitHubKey: $gitHubKey")
+        name = "GitHubPackages"
+        url = uri("https://maven.pkg.github.com/AgarEpam")
+
+        credentials {
+            username = gitHubUser
+            password = gitHubKey
+        }
+    }
 }
 
 kotlin {
@@ -59,7 +60,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api("ua.com.epam.agar.core:core:0.0.3") {
+                api("ua.com.epam.agar.core:core:0.0.4") {
                     isTransitive = true
                 }
 
@@ -79,7 +80,7 @@ kotlin {
                 implementation("org.jetbrains.kotlin:kotlin-test-common:$kotlinVersion")
                 implementation("org.jetbrains.kotlin:kotlin-test-annotations-common:$kotlinVersion")
 //                implementation("org.junit.jupiter:junit-jupiter:5.7.0")
-                implementation("io.mockk:mockk-common:1.8.13.kotlin13")
+                implementation("io.mockk:mockk-common:1.12.1")
 
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))

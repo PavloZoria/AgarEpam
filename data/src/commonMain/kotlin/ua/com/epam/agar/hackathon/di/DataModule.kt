@@ -30,17 +30,11 @@ import ua.com.epam.agar.hackathon.data.mapper.map_state.desired_state.CellActivi
 import ua.com.epam.agar.hackathon.data.mapper.map_state.desired_state.DesiredCellStateMapper
 import ua.com.epam.agar.hackathon.data.mapper.map_state.food.FoodMapper
 import ua.com.epam.agar.hackathon.api.game.socket.model.local.LocalMapStateModel
+import ua.com.epam.agar.hackathon.api.Host
+import ua.com.epam.agar.hackathon.api.game.socket.model.local.LocalMapStateModelMapper
 
 val kodeinContainer = DI.lazy {
-    importAll(DataModule.values().map { it.diModule }
-//        repositoriesModule,
-//        mappersModule,
-//        interactorModule,
-//        webSocketModule,
-//
-//        mapStorageTimerModule,//replace with the code bellow
-////        mapStorageModule
-    )
+    importAll(DataModule.values().map { it.diModule })
 }
 
 enum class DataModule(moduleName: String, init: DI.Builder.() -> Unit) {
@@ -69,25 +63,25 @@ enum class DataModule(moduleName: String, init: DI.Builder.() -> Unit) {
 
 
     Repositories("repositories", {
-        bind<RemoteGameDataRepository>() with singleton {
-            GameWebSocketAsAPI(webSocket = instance())
+        bind<RemoteGameDataRepository>() with multiton { host: Host ->
+            GameWebSocketAsAPI(webSocket = instance(arg = host))
         }
-        bind<CachingGameDataRepository>() with factory {
+        bind<CachingGameDataRepository>() with factory { host: Host ->
             GameDataCachingRepository(
-                gameDataRepository = instance(),
+                gameDataRepository = instance(arg = host),
                 mapStorage = instance(),
-                tickHandler = instance()
+                tickHandler = instance(arg = host)
             )
         }
 
-        bind<GameTickHandler>() with factory {
-            DefaultGameTickHandler(webSocket = instance())
+        bind<GameTickHandler>() with factory { host: Host ->
+            DefaultGameTickHandler(webSocket = instance(arg = host))
         }
     }),
     Interactor("interactor", {
-        bind<GameRepository>() with factory {
+        bind<GameRepository>() with factory { host: Host ->
             GameWebSocketInteractor(
-                gameDataRepository = instance(),
+                gameDataRepository = instance(arg = host),
                 gameConfigMapper = instance(),
                 mapStateMapper = instance(),
                 desiredCellStateMapper = instance()
@@ -95,7 +89,7 @@ enum class DataModule(moduleName: String, init: DI.Builder.() -> Unit) {
         }
     }),
     Mappers("mappers", {
-        bind<WebSocketModelMapper>() with factory { ua.com.epam.agar.hackathon.api.game.socket.mapper.WebSocketModelMapper() }
+        bind<WebSocketModelMapper>() with factory { WebSocketModelMapper() }
 
         bind<MyCellMapper>() with factory { MyCellMapper() }
         bind<AlienCellMapper>() with factory { AlienCellMapper() }
@@ -129,12 +123,12 @@ enum class DataModule(moduleName: String, init: DI.Builder.() -> Unit) {
         bind<DesiredCellStateMapper>() with factory {
             DesiredCellStateMapper(mapper = instance())
         }
-        bind<ua.com.epam.agar.hackathon.api.game.socket.model.local.LocalMapStateModelMapper>() with factory { ua.com.epam.agar.hackathon.api.game.socket.model.local.LocalMapStateModelMapper() }
+        bind<LocalMapStateModelMapper>() with factory { LocalMapStateModelMapper() }
     }),
     WebSocket("webSocket", {
-        bind<ua.com.epam.agar.hackathon.api.game.socket.WebSocket<WebSocketModel>>() with singleton {
+        bind<ua.com.epam.agar.hackathon.api.game.socket.WebSocket<WebSocketModel>>() with multiton { host: Host ->
             KtorWebSocket(
-                host = "45.77.67.171",
+                host = host.host,
                 modelMapper = instance()
             )
         }
@@ -143,72 +137,3 @@ enum class DataModule(moduleName: String, init: DI.Builder.() -> Unit) {
     val diModule: DI.Module = DI.Module(name = moduleName, init = init)
 
 }
-
-//val mapStorageTimerModule = DI.Module("mapStorageModule") {
-//    bind<Storage<MapStateModel>>("internal") with singleton { LocalMapStateStorage() }
-//    bind<Storage<MapStateModel>>("real") with singleton { ComparatorMapStorage(storage = instance("internal")) }
-//    bind<Storage<MapStateModel>>() with factory { TimeLoggingMapStorage(storage = instance("real")) }
-//}
-//val mapStorageModule = DI.Module("mapStorageModule") {
-//    bind<Storage<MapStateModel>>("internal") with singleton { LocalMapStateStorage() }
-//    bind<Storage<MapStateModel>>() with singleton { ComparatorMapStorage(storage = instance("internal")) }
-//}
-//
-//val repositoriesModule = DI.Module("repositories") {
-//    bind<RemoteGameDataRepository>() with singleton { GameWebSocketAsAPI(webSocket = instance()) }
-//    bind<CachingGameDataRepository>() with factory {
-//        GameDataCachingRepository(
-//            gameDataRepository = instance(),
-//            mapStorage = instance(),
-//            tickHandler = instance()
-//        )
-//    }
-//
-//    bind<GameTickHandler>() with factory { DefaultGameTickHandler(webSocket = instance()) }
-//}
-//
-//val interactorModule = DI.Module("interactor") {
-//    bind<GameRepository>() with factory {
-//        GameWebSocketInteractor(
-//            gameDataRepository = instance(),
-//            gameConfigMapper = instance(),
-//            mapStateMapper = instance(),
-//            desiredCellStateMapper = instance()
-//        )
-//    }
-//}
-//
-//val mappersModule = DI.Module("ç") {
-//    bind<WebSocketModelMapper>() with factory { WebSocketModelMapper() }
-//
-//    bind<MyCellMapper>() with factory { MyCellMapper() }
-//    bind<AlienCellMapper>() with factory { AlienCellMapper() }
-//    bind<CellMapper>() with factory { CellMapper(myCellMapper = instance(), alienCellMapper = instance()) }
-//
-//    bind<FoodMapper>() with factory { FoodMapper() }
-//    bind<MapStateMapper>() with factory { MapStateMapper(cellMapper = instance(), foodMapper = instance()) }
-//
-//    bind<CellConfigMapper>() with factory { CellConfigMapper() }
-//    bind<MapConfigMapper>() with factory { MapConfigMapper() }
-//    bind<FoodConfigMapper>() with factory { FoodConfigMapper() }
-//    bind<GameConfigMapper>() with factory {
-//        GameConfigMapper(
-//            cellConfigMapper = instance(),
-//            mapConfigMapper = instance(),
-//            foodConfigMapper = instance()
-//        )
-//    }
-//
-//    bind<CellActivityMapper>() with factory { CellActivityMapper() }
-//    bind<DesiredCellStateMapper>() with factory { DesiredCellStateMapper(mapper = instance()) }
-//}
-//
-//val webSocketModule = DI.Module("webSocket") {
-//
-//    bind<WebSocket<WebSocketModel>>() with singleton {
-//        KtorWebSocket(
-//            host = "45.77.67.171",
-//            modelMapper = instance()
-//        )
-//    }
-//}

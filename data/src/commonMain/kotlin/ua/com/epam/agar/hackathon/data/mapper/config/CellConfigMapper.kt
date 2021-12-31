@@ -26,7 +26,9 @@ internal class CellConfigMapper : Mapper<CellConfig, CellConfigModel> {
         maxPower = item.maxPower,
         energyToPower = item.energyToPower,
 
-        volatilization = item.volatilization
+        maxVolatilization = item.maxVolatilization,
+        minVolatilization = item.minVolatilization,
+        energyToVolatilization = item.energyToVolatilization
     )
 
     override fun mapTo(item: CellConfig): CellConfigModel = CellConfigModel(
@@ -50,6 +52,8 @@ internal class CellConfigMapper : Mapper<CellConfig, CellConfigModel> {
         maxPower = item.maxPower,
         energyToPower = item.energyToPower,
 
-        volatilization = item.volatilization
+        maxVolatilization = item.maxVolatilization,
+        minVolatilization = item.minVolatilization,
+        energyToVolatilization = item.energyToVolatilization
     )
 }

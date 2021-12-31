@@ -1,9 +1,13 @@
 package ua.com.epam.agar.app.game
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebChromeClient
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -41,12 +45,28 @@ class GameFragment : Fragment() {
         stopGameButton.setOnClickListener {
             viewModel.stopGame()
         }
+
+        with(gameView) {
+            webChromeClient = WebChromeClient()
+            webViewClient = WebViewClient()
+            clearCache(true)
+            clearHistory()
+            settings.javaScriptEnabled = true
+            settings.javaScriptCanOpenWindowsAutomatically = true
+            settings.builtInZoomControls = true
+            settings.displayZoomControls = false
+            setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        }
     }
 
     private fun setUpViewModel() = with(viewModel) {
         startGameEnabled.collectWhenResumed(lifecycleScope) {
             binding.startGameButton.isEnabled = it
             binding.startGameButton.isClickable = it
+        }
+        gameUrl.collectWhenResumed(lifecycleScope) {
+            binding.gameView.stopLoading()
+            binding.gameView.loadUrl(it)
         }
     }
 

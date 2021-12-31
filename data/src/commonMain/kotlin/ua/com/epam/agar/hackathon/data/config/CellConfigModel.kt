@@ -40,6 +40,10 @@ internal data class CellConfigModel(
     @SerialName("energyToPower")
     val energyToPower: Float,
 
-    @SerialName("volatilization")
-    val volatilization: Float,
+    @SerialName("maxVolatilization")
+    val maxVolatilization: Float,
+    @SerialName("minVolatilization")
+    val minVolatilization: Float,
+    @SerialName("energyToVolatilization")
+    val energyToVolatilization: Float,
 )

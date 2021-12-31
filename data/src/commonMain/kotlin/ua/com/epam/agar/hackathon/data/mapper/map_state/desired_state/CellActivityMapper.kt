@@ -24,7 +24,8 @@ internal class CellActivityMapper(
                     eatEfficiency = growIntention?.eatEfficiency,
                     maxSpeed = growIntention?.maxSpeed,
                     power = growIntention?.power,
-                    mass = growIntention?.mass
+                    mass = growIntention?.mass,
+                    volatilization = growIntention?.volatilization
                 )
             },
             additionalAction = additionalActionMapper.mapTo(item.additionalAction)

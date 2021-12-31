@@ -9,5 +9,6 @@ data class MyCell(
 
     val availableEnergy: Float,//ту яку може спожити
     val canSplit: Boolean,
-    val canMerge: Boolean
+    val canMerge: Boolean,
+    val mergeTimer: Long
 ): Cell(cellId, property)

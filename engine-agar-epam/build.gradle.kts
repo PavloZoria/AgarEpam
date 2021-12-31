@@ -74,10 +74,10 @@ kotlin {
             dependencies {
 //                 api(project(":core"))
 //                 implementation(project(":data"))
-                api("ua.com.epam.agar.core:core:0.0.3") {
+                api("ua.com.epam.agar.core:core:0.0.4") {
                     isTransitive = true
                 }
-                implementation("ua.com.epam.agar.data:data:0.0.3") {
+                implementation("ua.com.epam.agar.data:data:0.0.4") {
                     isTransitive = true
                 }
 

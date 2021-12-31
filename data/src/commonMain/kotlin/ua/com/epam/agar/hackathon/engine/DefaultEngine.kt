@@ -4,8 +4,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.kodein.di.Typed
 import org.kodein.di.direct
 import org.kodein.di.instance
+import ua.com.epam.agar.hackathon.api.Host
 import ua.com.epam.agar.hackathon.api.game.socket.caching.CachingGameDataRepository
 import ua.com.epam.agar.hackathon.api.game.socket.game.GameDataRepository
 import ua.com.epam.agar.hackathon.core.entity.main.MapState
@@ -15,17 +17,18 @@ import ua.com.epam.agar.hackathon.core.printLine
 import ua.com.epam.agar.hackathon.core.repository.GameRepository
 import ua.com.epam.agar.hackathon.di.kodeinContainer
 
-class DefaultEngine(private val cellLogic: CellLogic) : Engine {
+class DefaultEngine(private val cellLogic: CellLogic, private val host: Host) : Engine {
     private var startedJob: Job? = null
 
-    private val gameDataCombined = kodeinContainer.direct.instance<CachingGameDataRepository>()
-    private val gameRepository: GameRepository = kodeinContainer.direct.instance()
+    private val gameDataCombined: CachingGameDataRepository =
+        kodeinContainer.direct.instance(arg = host)
+    private val gameRepository: GameRepository = kodeinContainer.direct.instance(arg = host)
 
-    override suspend fun connectToRoom(roomId: String) {
+    override suspend fun connectToRoom(roomId: String, isTrainingRoom: Boolean) {
         printLine("connectToRoom: begin...")
         runCatching {
             gameDataCombined.connectToTransport()
-            configure(roomId, true)//TODO for testing purpose
+            configure(roomId, isTrainingRoom)
             printLine("connectToRoom: complete...")
         }.onFailure {
             throw Exception("Error happened during connecting to the room! Cause:\n ${it.stackTraceToString()}")
@@ -43,7 +46,7 @@ class DefaultEngine(private val cellLogic: CellLogic) : Engine {
     override suspend fun configure(roomId: String, isTrainingRoom: Boolean) = withContext(Dispatchers.Default) {
         printLine("configure: begin...")
         runCatching {
-            val gameConfig = gameRepository.connectToRoom(roomId)
+            val gameConfig = gameRepository.connectToRoom(roomId, isTrainingRoom)
             cellLogic.configure(gameConfig)
             printLine("configure: complete...")
         }.onFailure {

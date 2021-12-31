@@ -22,10 +22,10 @@ class InternalGameEngine(private val engineProvider: EngineProvider) : GameEngin
         engine = engineProvider.provideEngine(cellLogic)
     }
 
-    override fun startGame(roomId: String) {
+    override fun startGame(roomId: String, isTraining: Boolean) {
         checkInitCondition()
         scope.launch(Dispatchers.Default) {
-            engine.connectToRoom(roomId)
+            engine.connectToRoom(roomId, isTraining)
             engine.startGame()
         }
     }

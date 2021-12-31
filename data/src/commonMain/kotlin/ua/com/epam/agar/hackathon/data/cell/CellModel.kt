@@ -22,17 +22,22 @@ internal data class CellModel(
     val position: PositionModel? = null,
     @SerialName("velocity")
     val velocity: VelocityModel? = null,
+
     @SerialName("canSplit")
     val canSplit: Boolean? = null,
+    @SerialName("mergeTimer")
+    val mergeTimer: Long? = null,
     @SerialName("canMerge")
     val canMerge: Boolean? = null,
-    @SerialName("speed")
-    val speed: Float? = null,
 
     @SerialName("availableEnergy")
     val availableEnergy: Float? = null,
+
+    @SerialName("speed")
+    val speed: Float? = null,
     @SerialName("maxSpeed")
     val maxSpeed: Float? = null,
+
     @SerialName("eatEfficiency")
     val eatEfficiency: Float? = null,
     @SerialName("power")
