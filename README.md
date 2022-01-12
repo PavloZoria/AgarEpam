@@ -23,8 +23,27 @@ class MyApp : AgarApp() {
     }
 }
 ```
+4. Register your app class in `AndroidManifest.xml` file:
+```xml
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.epam.agar.hackathon.agar_epam">
 
-4. Run application
+  <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+  <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+  <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+  <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
+  <application
+          android:name=".app.MyApp"
+          android:usesCleartextTraffic="true">
+  </application>
+
+</manifest>
+
+```
+5. Run application
 
 ### CellLogic
 
