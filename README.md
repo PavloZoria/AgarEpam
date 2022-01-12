@@ -4,6 +4,10 @@
 
 There is `CellLogic` class which should be extended in order to write your custom logic to the Cell
 
+#TODO
+1. improve documentation of the entities
+2. publish library and describe how user can integrate it 
+
 ## Android Library
 
 ### Set up
