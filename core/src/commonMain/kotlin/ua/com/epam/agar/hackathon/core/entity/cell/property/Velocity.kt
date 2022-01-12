@@ -1,5 +1,9 @@
 package ua.com.epam.agar.hackathon.core.entity.cell.property
 
+/**
+ * Speed vector. The direction where we want to move our cell.
+ * Vector length will be ignored and will be calculated based on your speed
+ */
 data class Velocity(val x: Float?, val y: Float?) {
     companion object {
         /**

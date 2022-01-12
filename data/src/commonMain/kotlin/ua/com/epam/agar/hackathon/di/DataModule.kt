@@ -32,6 +32,7 @@ import ua.com.epam.agar.hackathon.data.mapper.map_state.food.FoodMapper
 import ua.com.epam.agar.hackathon.api.game.socket.model.local.LocalMapStateModel
 import ua.com.epam.agar.hackathon.api.Host
 import ua.com.epam.agar.hackathon.api.game.socket.model.local.LocalMapStateModelMapper
+import ua.com.epam.agar.hackathon.api.game.socket.ktor.SocketModelMapper
 
 val kodeinContainer = DI.lazy {
     importAll(DataModule.values().map { it.diModule })
@@ -89,7 +90,7 @@ enum class DataModule(moduleName: String, init: DI.Builder.() -> Unit) {
         }
     }),
     Mappers("mappers", {
-        bind<WebSocketModelMapper>() with factory { WebSocketModelMapper() }
+        bind<SocketModelMapper<WebSocketModel>>() with factory { WebSocketModelMapper() }
 
         bind<MyCellMapper>() with factory { MyCellMapper() }
         bind<AlienCellMapper>() with factory { AlienCellMapper() }

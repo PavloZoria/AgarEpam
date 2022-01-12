@@ -7,8 +7,14 @@ data class MyCell(
     override val cellId: CellId,
     override val property: CellProperty,
 
-    val availableEnergy: Float,//ту яку може спожити
+    /**
+     * The amount of energy that you have to digest in order to grow and develop
+     */
+    val availableEnergy: Float,
     val canSplit: Boolean,
     val canMerge: Boolean,
+    /**
+     * Amount of time that left until this cell be able to merge again
+     */
     val mergeTimer: Long
 ): Cell(cellId, property)
