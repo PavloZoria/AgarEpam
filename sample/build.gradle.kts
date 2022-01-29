@@ -46,7 +46,7 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true
+        viewBinding = true//TODO need to be described in the documentation
         dataBinding = true
     }
 
