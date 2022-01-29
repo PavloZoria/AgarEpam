@@ -60,7 +60,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api("ua.com.epam.agar.core:core:0.0.4") {
+                api("ua.com.epam.agar.core:core:0.0.6") {
                     isTransitive = true
                 }
 
