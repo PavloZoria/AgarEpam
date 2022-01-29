@@ -61,13 +61,14 @@ kotlin {
     android {
         publishLibraryVariants("release", "debug")
     }
-     ios {
-         binaries {
-             framework {
-                 baseName = "Shared"
-             }
-         }
-     }
+
+    ios {
+        binaries {
+            framework {
+                baseName = "engine-agar-epam"
+            }
+        }
+    }
 
     sourceSets {
         val commonMain by getting {
