@@ -78,7 +78,7 @@ kotlin {
                 api("ua.com.epam.agar.core:core:0.0.4") {
                     isTransitive = true
                 }
-                implementation("ua.com.epam.agar.data:data:0.0.4") {
+                implementation("ua.com.epam.agar.data:data:0.0.5") {
                     isTransitive = true
                 }
 

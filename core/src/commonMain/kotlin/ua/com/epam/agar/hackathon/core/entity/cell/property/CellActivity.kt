@@ -17,7 +17,7 @@ data class CellActivity(
      */
     val velocity: Velocity? = null,
     val growIntention: GrowIntention? = null,
-    val additionalAction: MoveAction? = null,
+    val additionalAction: TurnAction? = null,
 ) {
     constructor(
         cellId: CellId,
