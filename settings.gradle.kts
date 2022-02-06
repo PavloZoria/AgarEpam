@@ -14,7 +14,4 @@ pluginManagement {
 
 rootProject.name = "agar-library"
 
-include("core")
-include("data")
-include("engine-agar-epam")
 include("agar-epam")
