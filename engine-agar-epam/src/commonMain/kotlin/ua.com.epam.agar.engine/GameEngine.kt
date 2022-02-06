@@ -14,7 +14,7 @@ object GameEngine : GameEngine {
     }
 
     override fun startGame(roomId: String, isTesting: Boolean) {
-        gameEngine.startGame(roomId = roomId, isTesting = isTesting)
+        gameEngine.startGame(roomId = roomId, isTesting)
     }
 
     override fun stopGame() {

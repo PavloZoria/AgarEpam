@@ -9,7 +9,7 @@ import ua.com.epam.agar.hackathon.core.game.config.GameConfig
  */
 abstract class CellLogic {
 
-    private lateinit var gameConfig: GameConfig
+    lateinit var gameConfig: GameConfig
 
     fun configure(gameConfig: GameConfig) {
         this.gameConfig = gameConfig
