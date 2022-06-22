@@ -1,6 +1,6 @@
 # AgarEpam
 
-# This project in development stage
+# //This project in development stage
 
 ## Common documentation
 
