@@ -1,5 +1,7 @@
 # AgarEpam
-#This project in development stage
+
+# This project in development stage
+
 ## Common documentation
 
 There is `CellLogic` class which should be extended in order to write your custom logic to the Cell
